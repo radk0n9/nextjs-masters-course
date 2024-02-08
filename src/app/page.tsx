@@ -47,6 +47,7 @@ const products: ProductItemType[] = [
 export default function Home() {
 	return (
 		<section className="mx-auto max-w-md rounded-md bg-zinc-900 p-14 sm:max-w-2xl sm:py-16 md:max-w-6xl lg:max-w-7xl">
+			<h2 className="sr-only">Products</h2>
 			<ProductList products={products} />
 		</section>
 	);
