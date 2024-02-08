@@ -6,7 +6,7 @@ const products: ProductItemType[] = [
 		id: "1",
 		name: "Earthen Bottle",
 		category: "Items",
-		price: 48,
+		price: 4800,
 		itemImage: {
 			alt: "Tall slender",
 			src: "https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg",
@@ -16,7 +16,7 @@ const products: ProductItemType[] = [
 		id: "2",
 		name: "Nomad Tumbler",
 		category: "Items",
-		price: 35,
+		price: 3500,
 		itemImage: {
 			alt: "Olive drab green",
 			src: "https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg",
@@ -26,7 +26,7 @@ const products: ProductItemType[] = [
 		id: "3",
 		name: "Focus Paper Refill",
 		category: "Items",
-		price: 89,
+		price: 8900,
 		itemImage: {
 			alt: "Person using a pen",
 			src: "https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg",
@@ -36,7 +36,7 @@ const products: ProductItemType[] = [
 		id: "4",
 		name: "Machined Mechanical Pencil",
 		category: "Items",
-		price: 35,
+		price: 3500,
 		itemImage: {
 			alt: "Hand holding black",
 			src: "https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg",

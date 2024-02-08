@@ -1,4 +1,5 @@
 import { type ProductItemType } from "@/components/type";
+import { formatPrice } from "@/components/utils";
 
 type ProductItemsDescriptionProps = {
 	product: ProductItemType;
@@ -16,7 +17,7 @@ export const ProductItemsDescription = ({
 				</p>
 			</div>
 			<p className="text-sm font-semibold md:text-base">
-				<span>{price}$</span>
+				<span>{formatPrice(price / 100)}</span>
 			</p>
 		</div>
 	);
