@@ -1,4 +1,4 @@
-import { ProductItemList } from "@/components/molecules/ProductItemList";
+import { ProductItemList } from "@/components/atoms/ProductItemList";
 import { type ProductItemType } from "@/components/type";
 
 export const ProductList = ({ products }: { products: ProductItemType[] }) => {
