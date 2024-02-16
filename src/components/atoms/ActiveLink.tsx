@@ -7,17 +7,20 @@ import { type Route } from "next";
 
 export const ActiveLink = <T extends string>({
 	href,
+	exact,
 	children,
 }: {
 	href: Route<T>;
+	exact: boolean;
 	children: ReactNode;
 }) => {
 	const currentPathname = usePathname();
-	const isActive = currentPathname == href;
+	const isActive = exact ? currentPathname == href : currentPathname.startsWith(href);
+
 	return (
 		<Link
 			href={href}
-			className={clsx("rounded-lg p-2 hover:bg-zinc-300", isActive && "bg-zinc-300")}
+			className={clsx("rounded-lg px-4 py-2 hover:bg-zinc-300", isActive && "bg-zinc-300")}
 			aria-current={isActive ? "page" : undefined}
 		>
 			{children}

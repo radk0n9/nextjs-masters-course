@@ -15,20 +15,33 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	return (
 		<html lang="en">
 			<body className={inter.className}>
-				<nav>
-					<ul className="mx-auto flex justify-center gap-2 bg-zinc-200 p-1 text-lg font-semibold sm:max-w-2xl md:max-w-6xl lg:max-w-7xl lg:text-xl">
+				<nav className="bg-zinc-200">
+					<ul className="mx-auto flex justify-center gap-2  p-1 text-lg font-semibold sm:max-w-2xl md:max-w-6xl lg:max-w-7xl lg:text-xl">
 						<li className="my-2">
-							<ActiveLink href={"/"}>Home</ActiveLink>
+							<ActiveLink exact={true} href={"/"}>
+								Home
+							</ActiveLink>
 						</li>
 						<li className="my-2">
-							<ActiveLink href={"/products"}>All</ActiveLink>
+							<ActiveLink exact={false} href={"/products"}>
+								All
+							</ActiveLink>
 						</li>
 					</ul>
 				</nav>
-				<section className="mx-auto max-w-md rounded-md bg-zinc-100 p-14 sm:max-w-2xl sm:py-16 md:max-w-6xl lg:max-w-7xl">
+				<section className="mx-auto max-w-md rounded-md bg-zinc-100 p-12 sm:max-w-2xl sm:py-10 md:max-w-6xl lg:max-w-7xl">
 					{children}
 				</section>
 				<SpeedInsights />
+				<footer className="my-3 flex justify-center gap-2 text-center text-sm text-gray-500">
+					<p>© 2024</p>
+					<a
+						href="https://www.linkedin.com/in/konrad-pawelec/"
+						className="font-semibold transition-transform duration-200 hover:scale-105"
+					>
+						Konrad Pawelec
+					</a>
+				</footer>
 			</body>
 		</html>
 	);
