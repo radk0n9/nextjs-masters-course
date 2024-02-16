@@ -31,6 +31,7 @@ const productsResponeItemToProductItemType = (product: ProductResponeItem): Prod
 	return {
 		id: product.id,
 		name: product.title,
+		description: product.description,
 		category: product.category,
 		price: product.price,
 		itemImage: {
