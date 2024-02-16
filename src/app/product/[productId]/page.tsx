@@ -11,8 +11,8 @@ export const generateMetadata = async ({
 }): Promise<Metadata> => {
 	const product = await getProductsById(params.productId);
 	return {
-		title: `${product.name}`,
-		description: `${product.description}`,
+		title: product.name,
+		description: product.description,
 	};
 };
 
