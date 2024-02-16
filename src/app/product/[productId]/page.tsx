@@ -1,6 +1,6 @@
 import { type Metadata } from "next";
 import { Suspense } from "react";
-import { getProductsById } from "@/api/prodcuts";
+import { getProductsById, getProductsListStatic } from "@/api/prodcuts";
 import { SingleProductPage } from "@/components/oragnism /SingleProductPage";
 import { SuggestedProductsList } from "@/components/oragnism /SuggestedProdcuts";
 
@@ -14,6 +14,13 @@ export const generateMetadata = async ({
 		title: `${product.name}`,
 		description: `${product.description}`,
 	};
+};
+
+export const generateStaticParams = async () => {
+	const products = await getProductsListStatic();
+	return products.map((product) => ({
+		productId: product.id,
+	}));
 };
 
 export default async function SingleProductIdPage({ params }: { params: { productId: string } }) {

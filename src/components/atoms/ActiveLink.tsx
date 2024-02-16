@@ -13,8 +13,12 @@ export const ActiveLink = <T extends string>({
 	children: ReactNode;
 }) => {
 	const currentPathname = usePathname();
+	console.log(currentPathname[href.length]);
 	const isActive =
-		(href == "/" && currentPathname == "/") || (href !== "/" && currentPathname.startsWith(href));
+		(href === "/" && currentPathname === "/") ||
+		(href !== "/" &&
+			currentPathname.startsWith(href) &&
+			(currentPathname[href.length] === "/" || currentPathname.length === href.length));
 	return (
 		<Link
 			href={href}
