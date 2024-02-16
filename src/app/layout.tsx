@@ -25,7 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 						</li>
 					</ul>
 				</nav>
-				<section className="mx-auto max-w-md rounded-md bg-zinc-100 p-14 sm:max-w-2xl sm:py-16 md:max-w-6xl lg:max-w-7xl">
+				<section className="mx-auto max-w-md rounded-md bg-zinc-100 p-12 sm:max-w-2xl sm:py-10 md:max-w-6xl lg:max-w-7xl">
 					{children}
 				</section>
 				<SpeedInsights />

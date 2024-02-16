@@ -9,7 +9,7 @@ export const SuggestedProductsList = async () => {
 	return (
 		<>
 			<div className="mt-7">
-				<ProductList products={products.slice(0, 4)} />
+				<ProductList products={products.slice(-4)} />
 			</div>
 		</>
 	);

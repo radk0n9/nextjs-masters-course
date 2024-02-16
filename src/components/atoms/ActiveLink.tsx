@@ -13,13 +13,12 @@ export const ActiveLink = <T extends string>({
 	children: ReactNode;
 }) => {
 	const currentPathname = usePathname();
-	console.log(currentPathname.slice());
 	const isActive =
 		(href == "/" && currentPathname == "/") || (href !== "/" && currentPathname.startsWith(href));
 	return (
 		<Link
 			href={href}
-			className={clsx("rounded-lg p-2 hover:bg-zinc-300", isActive && "bg-zinc-300")}
+			className={clsx("rounded-lg px-4 py-2 hover:bg-zinc-300", isActive && "bg-zinc-300")}
 			aria-current={isActive ? "page" : undefined}
 		>
 			{children}

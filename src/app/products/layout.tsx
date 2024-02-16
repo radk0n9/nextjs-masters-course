@@ -5,7 +5,9 @@ export default function ProductsPageLayout({ children }: { children: ReactNode }
 	return (
 		<div>
 			{children}
-			<ProdcustPagination />
+			<div>
+				<ProdcustPagination />
+			</div>
 		</div>
 	);
 }
