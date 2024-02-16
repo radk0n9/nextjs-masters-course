@@ -18,10 +18,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				<nav className="bg-zinc-200">
 					<ul className="mx-auto flex justify-center gap-2  p-1 text-lg font-semibold sm:max-w-2xl md:max-w-6xl lg:max-w-7xl lg:text-xl">
 						<li className="my-2">
-							<ActiveLink href={"/"}>Home</ActiveLink>
+							<ActiveLink exact={true} href={"/"}>
+								Home
+							</ActiveLink>
 						</li>
 						<li className="my-2">
-							<ActiveLink href={"/products"}>All</ActiveLink>
+							<ActiveLink exact={false} href={"/products"}>
+								All
+							</ActiveLink>
 						</li>
 					</ul>
 				</nav>

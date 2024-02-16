@@ -7,18 +7,16 @@ import { type Route } from "next";
 
 export const ActiveLink = <T extends string>({
 	href,
+	exact,
 	children,
 }: {
 	href: Route<T>;
+	exact: boolean;
 	children: ReactNode;
 }) => {
 	const currentPathname = usePathname();
-	console.log(currentPathname[href.length]);
-	const isActive =
-		(href === "/" && currentPathname === "/") ||
-		(href !== "/" &&
-			currentPathname.startsWith(href) &&
-			(currentPathname[href.length] === "/" || currentPathname.length === href.length));
+	const isActive = exact ? currentPathname == href : currentPathname.startsWith(href);
+
 	return (
 		<Link
 			href={href}
