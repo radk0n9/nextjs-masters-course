@@ -1,0 +1,32 @@
+import { ShoppingCart } from "lucide-react";
+import { ActiveLink } from "@/components/atoms/ActiveLink";
+
+export const Navbar = () => {
+	return (
+		<nav className="sticky top-0 z-50 bg-zinc-200 bg-opacity-30 shadow backdrop-blur-lg backdrop-filter">
+			<div className="mx-auto max-w-md px-12 sm:max-w-2xl md:max-w-6xl lg:max-w-7xl">
+				<div className="relative flex h-16 justify-between">
+					<ul className="flex gap-3 text-sm/5 font-semibold lg:text-lg/5">
+						<li className="flex">
+							<ActiveLink exact={true} href={"/"}>
+								Home
+							</ActiveLink>
+						</li>
+						<li className="flex">
+							<ActiveLink exact={false} href={"/products"}>
+								All
+							</ActiveLink>
+						</li>
+					</ul>
+					<ul className="flex gap-2 text-sm/5 font-semibold lg:text-lg/5">
+						<li className="flex">
+							<ActiveLink exact={true} href={"/"}>
+								<ShoppingCart className="h-[1.3em] w-[1.3em]" />
+							</ActiveLink>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	);
+};

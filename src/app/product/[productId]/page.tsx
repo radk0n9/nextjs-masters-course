@@ -1,8 +1,6 @@
 import { type Metadata } from "next";
-import { Suspense } from "react";
 import { getProductsById, getProductsListStatic } from "@/api/prodcuts";
 import { SingleProductPage } from "@/components/oragnism /SingleProductPage";
-import { SuggestedProductsList } from "@/components/oragnism /SuggestedProdcuts";
 
 export const generateMetadata = async ({
 	params,
@@ -28,11 +26,6 @@ export default async function SingleProductIdPage({ params }: { params: { produc
 	return (
 		<div>
 			<SingleProductPage product={product} />
-			<aside>
-				<Suspense fallback="Loading...">
-					<SuggestedProductsList />
-				</Suspense>
-			</aside>
 		</div>
 	);
 }
