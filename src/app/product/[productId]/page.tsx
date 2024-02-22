@@ -1,5 +1,6 @@
+import { notFound } from "next/navigation";
 import { type Metadata } from "next";
-import { getProductsById, getProductsListStatic } from "@/api/prodcuts";
+import { getProductsById } from "@/api/prodcuts";
 import { SingleProductPage } from "@/components/oragnism /SingleProductPage";
 
 export const generateMetadata = async ({
@@ -9,20 +10,23 @@ export const generateMetadata = async ({
 }): Promise<Metadata> => {
 	const product = await getProductsById(params.productId);
 	return {
-		title: product.name,
-		description: product.description,
+		title: product.product?.name,
+		description: product.product?.description,
 	};
 };
 
-export const generateStaticParams = async () => {
-	const products = await getProductsListStatic();
-	return products.map((product) => ({
-		productId: product.id,
-	}));
-};
+// export const generateStaticParams = async () => {
+// 	const products = await getProductsListStatic();
+// 	return products.map((product) => ({
+// 		productId: product.id,
+// 	}));
+// };
 
 export default async function SingleProductIdPage({ params }: { params: { productId: string } }) {
 	const product = await getProductsById(params.productId);
+	if (!product) {
+		throw notFound();
+	}
 	return (
 		<div>
 			<SingleProductPage product={product} />

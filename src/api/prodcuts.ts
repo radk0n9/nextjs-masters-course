@@ -1,56 +1,36 @@
-import { type ProductItemType } from "@/components/type";
-
-type ProductResponeItem = {
-	id: string;
-	title: string;
-	price: number;
-	description: string;
-	category: string;
-	rating: {
-		rate: number;
-		count: number;
-	};
-	image: string;
-	longDescription: string;
-};
+import { loadEnvConfig } from "@next/env";
+import {
+	ProdcutsByIdDocument,
+	ProductsByCategoryBySlugDocument,
+	ProductsGetListDocument,
+} from "@/gql/graphql";
+import { excecuteGraphQL } from "@/api/graphqlApi";
+loadEnvConfig(process.cwd());
 
 export const getProductsList = async () => {
-	const res = await fetch("https://naszsklep-api.vercel.app/api/products?take=20");
-	const productsRespone = (await res.json()) as ProductResponeItem[];
-	const products = productsRespone.map(productsResponeItemToProductItemType);
-	return products;
+	const graphqlResponse = await excecuteGraphQL(ProductsGetListDocument, {});
+	return graphqlResponse.products.data;
 };
+``;
 
 export const getProductsListStatic = async () => {
-	const res = await fetch("https://naszsklep-api.vercel.app/api/products?take=80");
-	const productsRespone = (await res.json()) as ProductResponeItem[];
-	const products = productsRespone.map(productsResponeItemToProductItemType);
-	return products;
+	throw new Error("Not implemented");
 };
 
-export const getProductsById = async (id: ProductResponeItem["id"]) => {
-	const res = await fetch(`https://naszsklep-api.vercel.app/api/products/${id}`);
-	const productRespone = (await res.json()) as ProductResponeItem;
-	return productsResponeItemToProductItemType(productRespone);
+export const getProductsById = async (productId: string) => {
+	const product = await excecuteGraphQL(ProdcutsByIdDocument, { id: productId });
+	//console.log(product);
+	return product;
 };
 
-export const getProdcutsByPage = async (offset: string) => {
-	const res = await fetch(`https://naszsklep-api.vercel.app/api/products?take=20&offset=${offset}`);
-	const productsResponse = (await res.json()) as ProductResponeItem[];
-	const products = productsResponse.map(productsResponeItemToProductItemType);
-	return products;
+export const getProdcutsByCategoryBySlug = async (categorySlug: string) => {
+	const categories = await excecuteGraphQL(ProductsByCategoryBySlugDocument, {
+		slug: categorySlug,
+	});
+
+	return categories.category?.products;
 };
 
-const productsResponeItemToProductItemType = (product: ProductResponeItem): ProductItemType => {
-	return {
-		id: product.id,
-		name: product.title,
-		description: product.description,
-		category: product.category,
-		price: product.price,
-		itemImage: {
-			alt: product.id,
-			src: product.image,
-		},
-	};
+export const getProdcutsByPage = async () => {
+	throw new Error("Not implemented");
 };

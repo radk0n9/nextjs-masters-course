@@ -14,7 +14,6 @@
 		"strings": true
 	},
 	"graphql-config.dotEnvPath": "./.env",
-	"graphql-config.load.configName": "graphql",
 	"window.zoomLevel": 0.5,
 	"terminal.integrated.mouseWheelZoom": true
 }
