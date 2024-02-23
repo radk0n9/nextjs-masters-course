@@ -5,6 +5,7 @@ import {
 	ProductsByCollectionBySlugDocument,
 	ProductsGetListDocument,
 	ProductsPaginatedListDocument,
+	ProductsSearchBySearchDocument,
 	ProductsSuggestedBySlugDocument,
 } from "@/gql/graphql";
 import { excecuteGraphQL } from "@/api/graphqlApi";
@@ -48,10 +49,9 @@ export const getProductsPaginatedList = async (takeNumber: number, skipNumber: n
 	return graphqlResponse.products;
 };
 
-export const getProdcutsByPage = async () => {
-	throw new Error("Not implemented");
-};
-
-export const getProductsListStatic = async () => {
-	throw new Error("Not implemented");
+export const getProductsSearchBySearch = async (searchQuery: string) => {
+	const graphqlResponse = await excecuteGraphQL(ProductsSearchBySearchDocument, {
+		search: searchQuery,
+	});
+	return graphqlResponse.products;
 };

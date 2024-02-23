@@ -310,6 +310,13 @@ export type ProductsPaginatedListQueryVariables = Exact<{
 
 export type ProductsPaginatedListQuery = { products: { data: Array<{ id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string, alt: string, width: number, height: number }> }>, meta: { total: number } } };
 
+export type ProductsSearchBySearchQueryVariables = Exact<{
+  search?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type ProductsSearchBySearchQuery = { products: { data: Array<{ id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string, alt: string, width: number, height: number }> }> } };
+
 export type ProductsSuggestedBySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
 }>;
@@ -463,6 +470,28 @@ export const ProductsPaginatedListDocument = new TypedDocumentString(`
   }
   price
 }`) as unknown as TypedDocumentString<ProductsPaginatedListQuery, ProductsPaginatedListQueryVariables>;
+export const ProductsSearchBySearchDocument = new TypedDocumentString(`
+    query ProductsSearchBySearch($search: String) {
+  products(search: $search) {
+    data {
+      ...ProductsListItem
+    }
+  }
+}
+    fragment ProductsListItem on Product {
+  id
+  name
+  categories {
+    name
+  }
+  images {
+    url
+    alt
+    width
+    height
+  }
+  price
+}`) as unknown as TypedDocumentString<ProductsSearchBySearchQuery, ProductsSearchBySearchQueryVariables>;
 export const ProductsSuggestedBySlugDocument = new TypedDocumentString(`
     query ProductsSuggestedBySlug($slug: String!) {
   category(slug: $slug) {

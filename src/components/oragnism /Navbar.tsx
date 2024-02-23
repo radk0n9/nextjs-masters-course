@@ -25,7 +25,6 @@ export const Navbar = () => {
 							</li>
 						))}
 					</ul>
-
 					<div className="flex items-center gap-8 text-sm/5 lg:text-lg/5">
 						<SearchInput />
 						<ul>
