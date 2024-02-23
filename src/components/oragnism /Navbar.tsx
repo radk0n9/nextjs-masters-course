@@ -4,6 +4,7 @@ import { ActiveLink } from "@/components/atoms/ActiveLink";
 const navLinks = [
 	{ href: "/", label: "Home", exact: true },
 	{ href: "/products", label: "All", exact: false },
+	{ href: "/categories", label: "Categories", exact: false },
 	{ href: "/categories/t-shirts", label: "T-Shirts", exact: false },
 	{ href: "/categories/hoodies", label: "Hoodies", exact: false },
 	{ href: "/categories/accessories", label: "Accessories", exact: false },

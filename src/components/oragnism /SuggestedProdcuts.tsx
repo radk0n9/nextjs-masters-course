@@ -4,7 +4,7 @@ import { ProductList } from "@/components/oragnism /ProductList";
 //const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const SuggestedProductsList = async () => {
-	const products = await getProductsList();
+	const products = await getProductsList(4);
 	//await sleep(4000);
 	return (
 		<>
