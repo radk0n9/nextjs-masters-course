@@ -20,9 +20,9 @@ export const ActiveLink = ({
 		<Link
 			href={{ pathname: href }}
 			className={clsx(
-				"flex h-full items-center border-b-2 px-4 py-2 ",
-				(isActive && " border-purple-900 hover:border-purple-900") ||
-					" border-transparent hover:border-zinc-300",
+				"flex h-full items-center border-b-2 px-4 py-2",
+				(isActive && "border-purple-900 hover:border-purple-900") ||
+					"border-transparent hover:border-zinc-300",
 			)}
 			aria-current={isActive ? "page" : undefined}
 		>

@@ -1,7 +1,5 @@
-query ProductsByCategoryBySlug($slug: String) {
+query ProductsSuggestedBySlug($slug: String!) {
 	category(slug: $slug) {
-		name
-		description
 		products {
 			...ProductsListItem
 		}

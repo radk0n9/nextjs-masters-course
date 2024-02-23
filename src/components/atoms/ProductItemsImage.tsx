@@ -1,9 +1,21 @@
-export const ProducItemsImages = ({ src, alt }: { src: string; alt: string }) => {
+import NextImage from "next/image";
+
+export const ProducItemsImages = ({
+	src,
+	alt,
+	width,
+	height,
+}: {
+	src: string;
+	alt: string;
+	width: number;
+	height: number;
+}) => {
 	return (
 		<div className="aspect-square overflow-hidden rounded-lg border bg-stone-200 brightness-90 hover:brightness-100">
-			<img
-				width={300}
-				height={300}
+			<NextImage
+				width={width}
+				height={height}
 				alt={alt}
 				src={src}
 				className="h-full w-full object-cover object-center p-3 transition-transform hover:scale-105"

@@ -1,5 +1,6 @@
 import { ShoppingCart } from "lucide-react";
 import { ActiveLink } from "@/components/atoms/ActiveLink";
+import { SearchInput } from "@/components/atoms/SearchInput";
 
 const navLinks = [
 	{ href: "/", label: "Home", exact: true },
@@ -24,13 +25,17 @@ export const Navbar = () => {
 							</li>
 						))}
 					</ul>
-					<ul className="flex gap-2 text-sm/5 font-semibold lg:text-lg/5">
-						<li className="flex">
-							<ActiveLink exact={true} href={"/"}>
-								<ShoppingCart className="h-[1.3em] w-[1.3em]" />
-							</ActiveLink>
-						</li>
-					</ul>
+
+					<div className="flex items-center gap-8 text-sm/5 lg:text-lg/5">
+						<SearchInput />
+						<ul>
+							<li className="flex">
+								<ActiveLink exact={true} href={"/"}>
+									<ShoppingCart className="h-[1.3em] w-[1.3em]" />
+								</ActiveLink>
+							</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</nav>

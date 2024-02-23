@@ -6,6 +6,9 @@ fragment ProductsListItem on Product {
 	}
 	images {
 		url
+		alt
+		width
+		height
 	}
 	price
 }

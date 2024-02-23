@@ -3,6 +3,7 @@ query ProdcutsById($id: ID) {
 		name
 		categories {
 			name
+			slug
 		}
 		price
 		description

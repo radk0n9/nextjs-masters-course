@@ -4,6 +4,8 @@ import {
 	ProductsByCategoryBySlugDocument,
 	ProductsByCollectionBySlugDocument,
 	ProductsGetListDocument,
+	ProductsPaginatedListDocument,
+	ProductsSuggestedBySlugDocument,
 } from "@/gql/graphql";
 import { excecuteGraphQL } from "@/api/graphqlApi";
 loadEnvConfig(process.cwd());
@@ -14,16 +16,16 @@ export const getProductsList = async (numberOfItems: number) => {
 };
 
 export const getProductsById = async (productId: string) => {
-	const product = await excecuteGraphQL(ProdcutsByIdDocument, { id: productId });
-	return product;
+	const graphqlResponse = await excecuteGraphQL(ProdcutsByIdDocument, { id: productId });
+	return graphqlResponse;
 };
 
 export const getProdcutsByCategoryBySlug = async (categorySlug: string) => {
-	const categories = await excecuteGraphQL(ProductsByCategoryBySlugDocument, {
+	const graphqlResponse = await excecuteGraphQL(ProductsByCategoryBySlugDocument, {
 		slug: categorySlug,
 	});
 
-	return categories.category?.products;
+	return graphqlResponse.category;
 };
 
 export const getProductsByCollection = async (collectionName: string) => {
@@ -31,6 +33,19 @@ export const getProductsByCollection = async (collectionName: string) => {
 		slug: collectionName,
 	});
 	return graphqlResponse.collection;
+};
+
+export const getProductsSuggestedBySlug = async (slug: string) => {
+	const graphqlResponse = await excecuteGraphQL(ProductsSuggestedBySlugDocument, { slug: slug });
+	return graphqlResponse.category?.products;
+};
+
+export const getProductsPaginatedList = async (takeNumber: number, skipNumber: number) => {
+	const graphqlResponse = await excecuteGraphQL(ProductsPaginatedListDocument, {
+		take: takeNumber,
+		skip: skipNumber,
+	});
+	return graphqlResponse.products;
 };
 
 export const getProdcutsByPage = async () => {

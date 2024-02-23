@@ -1,0 +1,10 @@
+query ProductsPaginatedList($take: Int!, $skip: Int) {
+	products(take: $take, skip: $skip) {
+		data {
+			...ProductsListItem
+		}
+		meta {
+			total
+		}
+	}
+}
