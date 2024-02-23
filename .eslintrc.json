@@ -89,5 +89,5 @@
 			}
 		}
 	],
-	"ignorePatterns": ["*.js", "*.jsx", "qraphql.ts"]
+	"ignorePatterns": ["*.js", "*.jsx"]
 }
