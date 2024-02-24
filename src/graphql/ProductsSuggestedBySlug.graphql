@@ -1,0 +1,7 @@
+query ProductsSuggestedBySlug($slug: String!) {
+	category(slug: $slug) {
+		products {
+			...ProductsListItem
+		}
+	}
+}

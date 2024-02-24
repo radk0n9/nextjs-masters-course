@@ -1,56 +1,57 @@
-import { type ProductItemType } from "@/components/type";
+import { loadEnvConfig } from "@next/env";
+import {
+	ProdcutsByIdDocument,
+	ProductsByCategoryBySlugDocument,
+	ProductsByCollectionBySlugDocument,
+	ProductsGetListDocument,
+	ProductsPaginatedListDocument,
+	ProductsSearchBySearchDocument,
+	ProductsSuggestedBySlugDocument,
+} from "@/gql/graphql";
+import { excecuteGraphQL } from "@/api/graphqlApi";
+loadEnvConfig(process.cwd());
 
-type ProductResponeItem = {
-	id: string;
-	title: string;
-	price: number;
-	description: string;
-	category: string;
-	rating: {
-		rate: number;
-		count: number;
-	};
-	image: string;
-	longDescription: string;
+export const getProductsList = async (numberOfItems: number) => {
+	const graphqlResponse = await excecuteGraphQL(ProductsGetListDocument, { take: numberOfItems });
+	return graphqlResponse.products.data;
 };
 
-export const getProductsList = async () => {
-	const res = await fetch("https://naszsklep-api.vercel.app/api/products?take=20");
-	const productsRespone = (await res.json()) as ProductResponeItem[];
-	const products = productsRespone.map(productsResponeItemToProductItemType);
-	return products;
+export const getProductsById = async (productId: string) => {
+	const graphqlResponse = await excecuteGraphQL(ProdcutsByIdDocument, { id: productId });
+	return graphqlResponse;
 };
 
-export const getProductsListStatic = async () => {
-	const res = await fetch("https://naszsklep-api.vercel.app/api/products?take=80");
-	const productsRespone = (await res.json()) as ProductResponeItem[];
-	const products = productsRespone.map(productsResponeItemToProductItemType);
-	return products;
+export const getProdcutsByCategoryBySlug = async (categorySlug: string) => {
+	const graphqlResponse = await excecuteGraphQL(ProductsByCategoryBySlugDocument, {
+		slug: categorySlug,
+	});
+
+	return graphqlResponse.category;
 };
 
-export const getProductsById = async (id: ProductResponeItem["id"]) => {
-	const res = await fetch(`https://naszsklep-api.vercel.app/api/products/${id}`);
-	const productRespone = (await res.json()) as ProductResponeItem;
-	return productsResponeItemToProductItemType(productRespone);
+export const getProductsByCollection = async (collectionName: string) => {
+	const graphqlResponse = await excecuteGraphQL(ProductsByCollectionBySlugDocument, {
+		slug: collectionName,
+	});
+	return graphqlResponse.collection;
 };
 
-export const getProdcutsByPage = async (offset: string) => {
-	const res = await fetch(`https://naszsklep-api.vercel.app/api/products?take=20&offset=${offset}`);
-	const productsResponse = (await res.json()) as ProductResponeItem[];
-	const products = productsResponse.map(productsResponeItemToProductItemType);
-	return products;
+export const getProductsSuggestedBySlug = async (slug: string) => {
+	const graphqlResponse = await excecuteGraphQL(ProductsSuggestedBySlugDocument, { slug: slug });
+	return graphqlResponse.category?.products;
 };
 
-const productsResponeItemToProductItemType = (product: ProductResponeItem): ProductItemType => {
-	return {
-		id: product.id,
-		name: product.title,
-		description: product.description,
-		category: product.category,
-		price: product.price,
-		itemImage: {
-			alt: product.id,
-			src: product.image,
-		},
-	};
+export const getProductsPaginatedList = async (takeNumber: number, skipNumber: number) => {
+	const graphqlResponse = await excecuteGraphQL(ProductsPaginatedListDocument, {
+		take: takeNumber,
+		skip: skipNumber,
+	});
+	return graphqlResponse.products;
+};
+
+export const getProductsSearchBySearch = async (searchQuery: string) => {
+	const graphqlResponse = await excecuteGraphQL(ProductsSearchBySearchDocument, {
+		search: searchQuery,
+	});
+	return graphqlResponse.products;
 };

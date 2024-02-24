@@ -3,14 +3,13 @@ import Link from "next/link";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
 import { type ReactNode } from "react";
-import { type Route } from "next";
 
-export const ActiveLink = <T extends string>({
+export const ActiveLink = ({
 	href,
 	exact,
 	children,
 }: {
-	href: Route<T>;
+	href: string;
 	exact: boolean;
 	children: ReactNode;
 }) => {
@@ -19,8 +18,12 @@ export const ActiveLink = <T extends string>({
 
 	return (
 		<Link
-			href={href}
-			className={clsx("rounded-lg px-4 py-2 hover:bg-zinc-300", isActive && "bg-zinc-300")}
+			href={{ pathname: href }}
+			className={clsx(
+				"flex h-full items-center border-b-2 px-4 py-2",
+				(isActive && "border-purple-900 hover:border-purple-900") ||
+					"border-transparent hover:border-zinc-300",
+			)}
 			aria-current={isActive ? "page" : undefined}
 		>
 			{children}

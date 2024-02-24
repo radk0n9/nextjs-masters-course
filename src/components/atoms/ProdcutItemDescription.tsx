@@ -1,20 +1,18 @@
-import { type ProductItemType } from "@/components/type";
-import { formatPrice } from "@/components/utils";
+import { formatPrice } from "@/utils/utils";
+import { type ProductsListItemFragment } from "@/gql/graphql";
 
 type ProductItemsDescriptionProps = {
-	product: ProductItemType;
+	product: ProductsListItemFragment;
 };
 
 export const ProductItemsDescription = ({
-	product: { name, category, price },
+	product: { name, categories, price },
 }: ProductItemsDescriptionProps) => {
 	return (
 		<div className="mt-3 flex justify-between">
 			<div>
 				<h3 className="text-sm font-semibold md:text-base">{name}</h3>
-				<p className="text-sm md:text-base">
-					<span>{category}</span>
-				</p>
+				<p className="text-sm md:text-base">{categories[0] && <span>{categories[0].name}</span>}</p>
 			</div>
 			<p className="text-sm font-semibold md:text-base">
 				<span>{formatPrice(price / 100)}</span>
