@@ -2,15 +2,26 @@
 import NextLink from "next/link";
 import { Search } from "lucide-react";
 import { type ChangeEvent, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const useSerachQuery = () => {
 	const [searchQuery, setSearchQuery] = useState("");
+	const [redirectTimer, setRedirectTimer] = useState(null as unknown as NodeJS.Timeout);
+	const router = useRouter();
 
 	const handleChange = (p: ChangeEvent<HTMLInputElement>) => {
+		setSearchQuery(encodeURIComponent(p.target.value));
+		clearTimeout(redirectTimer);
+
 		if (p.target.value == "") {
 			setSearchQuery(searchQuery);
 		} else {
-			setSearchQuery(p.target.value);
+			console.log(searchQuery);
+			setRedirectTimer(
+				setTimeout(() => {
+					router.push(`/search?query=${searchQuery}`);
+				}, 500),
+			);
 		}
 	};
 	return { searchQuery, handleChange };
