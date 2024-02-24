@@ -1,4 +1,4 @@
-import { formatPrice } from "@/components/utils";
+import { formatPrice } from "@/utils/utils";
 import { type ProductsListItemFragment } from "@/gql/graphql";
 
 type ProductItemsDescriptionProps = {

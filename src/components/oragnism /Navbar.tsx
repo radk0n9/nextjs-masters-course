@@ -1,4 +1,5 @@
 import { ShoppingCart } from "lucide-react";
+import { Suspense } from "react";
 import { ActiveLink } from "@/components/atoms/ActiveLink";
 import { SearchInput } from "@/components/atoms/SearchInput";
 
@@ -26,7 +27,9 @@ export const Navbar = () => {
 						))}
 					</ul>
 					<div className="flex items-center gap-8 text-sm/5 lg:text-lg/5">
-						<SearchInput />
+						<Suspense>
+							<SearchInput />
+						</Suspense>
 						<ul>
 							<li className="flex">
 								<ActiveLink exact={true} href={"/"}>

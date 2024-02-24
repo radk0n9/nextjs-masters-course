@@ -1,34 +1,56 @@
 "use client";
 import NextLink from "next/link";
 import { Search } from "lucide-react";
-import { type ChangeEvent, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useDebounce } from "@/utils/debounce";
+// const useSerachQuery = () => {
+// 	const [searchQuery, setSearchQuery] = useState("");
+// 	const [redirectTimer, setRedirectTimer] = useState(null as unknown as NodeJS.Timeout);
+// 	const router = useRouter();
 
-const useSerachQuery = () => {
-	const [searchQuery, setSearchQuery] = useState("");
-	const [redirectTimer, setRedirectTimer] = useState(null as unknown as NodeJS.Timeout);
-	const router = useRouter();
+// 	const handleChange = (p: ChangeEvent<HTMLInputElement>) => {
+// 		setSearchQuery(encodeURIComponent(p.target.value));
+// 		clearTimeout(redirectTimer);
 
-	const handleChange = (p: ChangeEvent<HTMLInputElement>) => {
-		setSearchQuery(encodeURIComponent(p.target.value));
-		clearTimeout(redirectTimer);
-
-		if (p.target.value == "") {
-			setSearchQuery(searchQuery);
-		} else {
-			console.log(searchQuery);
-			setRedirectTimer(
-				setTimeout(() => {
-					router.push(`/search?query=${searchQuery}`);
-				}, 500),
-			);
-		}
-	};
-	return { searchQuery, handleChange };
-};
+// 		if (p.target.value == "") {
+// 			setSearchQuery(searchQuery);
+// 		} else {
+// 			console.log(searchQuery);
+// 			setRedirectTimer(
+// 				setTimeout(() => {
+// 					router.push(`/search?query=${searchQuery}`);
+// 				}, 500),
+// 			);
+// 		}
+// 	};
+// 	return { searchQuery, handleChange };
+// };
 
 export const SearchInput = () => {
-	const { searchQuery, handleChange } = useSerachQuery();
+	// const { searchQuery, handleChange } = useSerachQuery();
+
+	const router = useRouter();
+	const searchParams = useSearchParams();
+	const searchQueryUrl = searchParams.get("query")?.toString();
+	const [searchQuery, setSearchQuery] = useState<string>(searchQueryUrl || "");
+
+	const searchQueryDebounce = useDebounce(searchQuery, 500);
+
+	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const searchQuery = event.target.value;
+		if (searchQuery.length <= 1) {
+			setSearchQuery("Not enought characters");
+		} else {
+			setSearchQuery(searchQuery);
+		}
+	};
+
+	useEffect(() => {
+		if (searchQueryDebounce) {
+			router.push(`/search?query=${searchQueryDebounce}`);
+		}
+	}, [searchQueryDebounce, router]);
 
 	return (
 		<>
