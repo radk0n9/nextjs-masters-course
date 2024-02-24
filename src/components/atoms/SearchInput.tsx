@@ -56,7 +56,7 @@ export const SearchInput = () => {
 		<>
 			<div className="flex h-9 w-64 items-center justify-center gap-1 rounded-xl border bg-white">
 				<input
-					type="text"
+					type="search"
 					name="searchQuery"
 					onChange={handleChange}
 					className="w-48 rounded-xl px-1 text-sm outline-none"
