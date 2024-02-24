@@ -4,53 +4,36 @@ import { Search } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDebounce } from "@/utils/debounce";
-// const useSerachQuery = () => {
-// 	const [searchQuery, setSearchQuery] = useState("");
-// 	const [redirectTimer, setRedirectTimer] = useState(null as unknown as NodeJS.Timeout);
-// 	const router = useRouter();
-
-// 	const handleChange = (p: ChangeEvent<HTMLInputElement>) => {
-// 		setSearchQuery(encodeURIComponent(p.target.value));
-// 		clearTimeout(redirectTimer);
-
-// 		if (p.target.value == "") {
-// 			setSearchQuery(searchQuery);
-// 		} else {
-// 			console.log(searchQuery);
-// 			setRedirectTimer(
-// 				setTimeout(() => {
-// 					router.push(`/search?query=${searchQuery}`);
-// 				}, 500),
-// 			);
-// 		}
-// 	};
-// 	return { searchQuery, handleChange };
-// };
 
 export const SearchInput = () => {
-	// const { searchQuery, handleChange } = useSerachQuery();
-
 	const router = useRouter();
 	const searchParams = useSearchParams();
 	const searchQueryUrl = searchParams.get("query")?.toString();
 	const [searchQuery, setSearchQuery] = useState<string>(searchQueryUrl || "");
+	const [isTyping, setIsTyping] = useState<boolean>(false);
 
 	const searchQueryDebounce = useDebounce(searchQuery, 500);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const searchQuery = event.target.value;
-		if (searchQuery.length <= 1) {
-			setSearchQuery("Not enought characters");
-		} else {
-			setSearchQuery(searchQuery);
-		}
+		setIsTyping(true);
+		const nextSearchQuery = event.target.value;
+
+		const timeout = setTimeout(() => {
+			if (nextSearchQuery.length <= 1) {
+				setSearchQuery("Not enought characters");
+			} else {
+				setSearchQuery(nextSearchQuery);
+			}
+		}, 500);
+		setIsTyping(false);
+		return () => clearTimeout(timeout);
 	};
 
 	useEffect(() => {
-		if (searchQueryDebounce) {
+		if (searchQueryDebounce && !isTyping) {
 			router.push(`/search?query=${searchQueryDebounce}`);
 		}
-	}, [searchQueryDebounce, router]);
+	}, [searchQueryDebounce, router, isTyping]);
 
 	return (
 		<>
