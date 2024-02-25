@@ -31,7 +31,7 @@ export default async function ProductsPage({ params }: { params: { pageNumber: s
 				</Suspense>
 			</div>
 			<div>
-				<ProductsPagination numberPages={numberPages} currentPage={currentPage} />
+				<ProductsPagination numberPages={numberPages} currentPage={currentPage} url={`/products`} />
 			</div>
 		</>
 	);

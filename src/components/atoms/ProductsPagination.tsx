@@ -1,13 +1,16 @@
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 import NextLink from "next/link";
+import { type Route } from "next";
 import { ActiveLink } from "@/components/atoms/ActiveLink";
 
 export const ProductsPagination = async ({
 	numberPages,
 	currentPage,
+	url,
 }: {
 	numberPages: number;
 	currentPage: number;
+	url: Route;
 }) => {
 	return (
 		<>
@@ -15,7 +18,7 @@ export const ProductsPagination = async ({
 				<ul className="mx-auto flex justify-center gap-1 p-2 text-lg font-semibold">
 					<li>
 						<NextLink
-							href={currentPage == 1 ? `/products/1` : `/products/${currentPage - 1} `}
+							href={currentPage == 1 ? `${url}` : (`${url}/${currentPage - 1}` as Route)}
 							className="flex h-full items-center border-b-2 border-transparent px-2 py-2 hover:border-zinc-300"
 						>
 							<ArrowBigLeft />
@@ -23,7 +26,7 @@ export const ProductsPagination = async ({
 					</li>
 					{Array.from({ length: numberPages }).map((_, index) => (
 						<li key={index}>
-							<ActiveLink exact={true} href={`/products/${index + 1}`}>
+							<ActiveLink exact={true} href={`${url}/${index + 1}` as Route}>
 								{index + 1}
 							</ActiveLink>
 						</li>
@@ -32,8 +35,8 @@ export const ProductsPagination = async ({
 						<NextLink
 							href={
 								currentPage == numberPages
-									? `/products/${numberPages}`
-									: `/products/${currentPage + 1}`
+									? (`${url}/${numberPages}` as Route)
+									: (`${url}/${currentPage + 1}` as Route)
 							}
 							className="flex h-full items-center border-b-2 border-transparent px-2 py-2 hover:border-zinc-300"
 						>
