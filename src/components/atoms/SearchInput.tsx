@@ -10,28 +10,21 @@ export const SearchInput = () => {
 	const searchParams = useSearchParams();
 	const searchQueryUrl = searchParams.get("query")?.toString();
 	const [searchQuery, setSearchQuery] = useState<string>(searchQueryUrl || "");
-	const [isTyping, setIsTyping] = useState<boolean>(false);
-
-	const searchQueryDebounce = useDebounce(searchQuery, 500);
+	const [isTyping, setIsTyping] = useState<boolean>(true);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setIsTyping(true);
-		const nextSearchQuery = event.target.value;
-
 		const timeout = setTimeout(() => {
-			if (nextSearchQuery.length <= 1) {
-				setSearchQuery("Not enought characters");
-			} else {
-				setSearchQuery(nextSearchQuery);
-			}
+			setSearchQuery(event.target.value);
+			setIsTyping(false);
 		}, 500);
-		setIsTyping(false);
+
 		return () => clearTimeout(timeout);
 	};
+	const searchQueryDebounce = useDebounce(searchQuery, 500);
 
 	useEffect(() => {
 		if (searchQueryDebounce && !isTyping) {
-			router.push(`/search?query=${searchQueryDebounce}`);
+			router.replace(`/search?query=${searchQueryDebounce}`);
 		}
 	}, [searchQueryDebounce, router, isTyping]);
 

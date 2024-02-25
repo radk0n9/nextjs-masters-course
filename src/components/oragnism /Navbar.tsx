@@ -1,5 +1,6 @@
 import { ShoppingCart } from "lucide-react";
 import { Suspense } from "react";
+import { type Route } from "next";
 import { ActiveLink } from "@/components/atoms/ActiveLink";
 import { SearchInput } from "@/components/atoms/SearchInput";
 
@@ -20,7 +21,7 @@ export const Navbar = () => {
 					<ul className="flex gap-3 text-sm/5 font-semibold lg:text-lg/5">
 						{navLinks.map((link, index) => (
 							<li key={index} className="flex">
-								<ActiveLink exact={link.exact} href={link.href}>
+								<ActiveLink exact={link.exact} href={link.href as Route}>
 									{link.label}
 								</ActiveLink>
 							</li>
@@ -32,7 +33,7 @@ export const Navbar = () => {
 						</Suspense>
 						<ul>
 							<li className="flex">
-								<ActiveLink exact={true} href={"/"}>
+								<ActiveLink exact={true} href={"" as Route}>
 									<ShoppingCart className="h-[1.3em] w-[1.3em]" />
 								</ActiveLink>
 							</li>

@@ -3,13 +3,14 @@ import Link from "next/link";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
 import { type ReactNode } from "react";
+import { type Route } from "next";
 
-export const ActiveLink = ({
+export const ActiveLink = <T extends string>({
 	href,
 	exact,
 	children,
 }: {
-	href: string;
+	href: Route<T>;
 	exact: boolean;
 	children: ReactNode;
 }) => {
@@ -18,7 +19,7 @@ export const ActiveLink = ({
 
 	return (
 		<Link
-			href={{ pathname: href }}
+			href={href}
 			className={clsx(
 				"flex h-full items-center border-b-2 px-4 py-2",
 				(isActive && "border-purple-900 hover:border-purple-900") ||
