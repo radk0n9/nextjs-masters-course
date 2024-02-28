@@ -1,5 +1,5 @@
 import NextImage from "next/image";
-import { SuggestedProductsList } from "@/components/oragnism /SuggestedProdcuts";
+import { SuggestedProductsList } from "@/components/oragnism/SuggestedProdcuts";
 import { formatPrice } from "@/utils/utils";
 import { type ProdcutsByIdQuery } from "@/gql/graphql";
 

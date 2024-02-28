@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useOptimistic } from "react";
 import { changeProductCardQuantity } from "@/app/cart/actions";
 
 export const CartItemQuantity = ({
@@ -12,15 +12,21 @@ export const CartItemQuantity = ({
 	productId: string;
 	quantity: number;
 }) => {
-	const [optimisticQuantity, setOptimisticQuantity] = useState(quantity);
+	const [optimisticQuantity, setOptimisticQuantity] = useOptimistic(
+		quantity,
+		(_state, newQunatity: number) => newQunatity,
+	);
 
 	return (
-		<form>
-			<article className="flex items-center justify-center">
+		<form className="flex items-center justify-center gap-2">
+			<div className="flex items-center">
 				<button
 					type="submit"
-					className="my-1 ml-2 h-7 w-7 rounded-lg bg-zinc-300 shadow-lg brightness-90 transition-transform duration-200 hover:scale-95 hover:brightness-100 disabled:cursor-wait disabled:bg-zinc-500"
+					className="h-8 w-8 rounded-full bg-zinc-300 shadow-lg brightness-90 transition-transform duration-200 hover:scale-95 hover:brightness-100 disabled:cursor-wait disabled:bg-zinc-500"
 					formAction={async () => {
+						if (optimisticQuantity === 0) {
+							return;
+						}
 						setOptimisticQuantity(optimisticQuantity - 1);
 						await changeProductCardQuantity(
 							(cartId = cartId),
@@ -31,24 +37,24 @@ export const CartItemQuantity = ({
 				>
 					-
 				</button>
-				<div>{optimisticQuantity}</div>
-				<div>
-					<button
-						type="submit"
-						className="my-1 ml-2 h-7 w-7 rounded-lg bg-zinc-300 shadow-lg brightness-90 transition-transform duration-200 hover:scale-95 hover:brightness-100 disabled:cursor-wait disabled:bg-zinc-500"
-						formAction={async () => {
-							setOptimisticQuantity(optimisticQuantity + 1);
-							await changeProductCardQuantity(
-								(cartId = cartId),
-								(productId = productId),
-								(quantity = optimisticQuantity + 1),
-							);
-						}}
-					>
-						+
-					</button>
-				</div>
-			</article>
+			</div>
+			<div className="mx-2">{optimisticQuantity}</div>
+			<div className="flex items-center">
+				<button
+					type="submit"
+					className="h-8 w-8 rounded-full bg-zinc-300 shadow-lg brightness-90 transition-transform duration-200 hover:scale-95 hover:brightness-100 disabled:cursor-wait disabled:bg-zinc-500"
+					formAction={async () => {
+						setOptimisticQuantity(optimisticQuantity + 1);
+						await changeProductCardQuantity(
+							(cartId = cartId),
+							(productId = productId),
+							(quantity = optimisticQuantity + 1),
+						);
+					}}
+				>
+					+
+				</button>
+			</div>
 		</form>
 	);
 };

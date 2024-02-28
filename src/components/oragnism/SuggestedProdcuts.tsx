@@ -1,5 +1,5 @@
 import { getProductsSuggestedBySlug } from "@/api/prodcuts";
-import { ProductList } from "@/components/oragnism /ProductList";
+import { ProductList } from "@/components/oragnism/ProductList";
 
 //const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 

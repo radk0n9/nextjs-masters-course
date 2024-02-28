@@ -1,65 +1,42 @@
 import { redirect } from "next/navigation";
 import { getOrCreateCart } from "@/api/cart";
-import { formatPrice } from "@/utils/utils";
-import { CartItemQuantity } from "@/components/atoms/CartItemQuantity";
-import { RemoveProductCart } from "@/components/atoms/RemoveProductCart";
 import { handlePaymentAction } from "@/app/cart/actions";
+import { ShoppingCartItem } from "@/components/atoms/ShoppingCartItem";
 
 export default async function CartPage() {
 	const cart = await getOrCreateCart();
 
-	if (!cart) {
+	if (cart.cartFindOrCreate.items.length === 0) {
 		redirect("/");
 	}
 
 	return (
 		<>
-			{/* <pre>{JSON.stringify(cart, null, 2)}</pre> */}
-			<div>
-				<table className="table-fixed">
-					<thead className="">
-						<tr className="table-row">
-							<th className="px-7">Product</th>
-							<th className="px-7">Category</th>
-							<th className="px-7">Quantity</th>
-							<th className="px-7">Price</th>
-						</tr>
-					</thead>
-					<tbody className="table-row-group text-center">
-						{cart.cartFindOrCreate.items.map(
-							(item) =>
-								item.product && (
-									<tr key={item.product.id}>
-										<td>{item.product.name}</td>
-										{item.product.categories[0] && <td>{item.product.categories[0].name}</td>}
-										<td className="text-center">
-											<CartItemQuantity
-												quantity={item.quantity}
-												cartId={cart.cartFindOrCreate.id}
-												productId={item.product.id}
-											/>
-										</td>
-										<td>{formatPrice(item.product.price / 100)}</td>
-										{cart.cartFindOrCreate.items[0]?.product && (
-											<RemoveProductCart
-												cartId={cart.cartFindOrCreate.id}
-												productId={cart.cartFindOrCreate.items[0]?.product.id}
-											/>
-										)}
-									</tr>
-								),
-						)}
-					</tbody>
-				</table>
-				<form action={handlePaymentAction}>
-					<button
-						type="submit"
-						className="mt-4 w-full max-w-sm rounded-md border-4 border-transparent bg-purple-500 py-2 font-bold text-white transition-colors hover:border-4 hover:border-purple-900 hover:bg-purple-600"
-					>
-						Pay
-					</button>
-				</form>
+			<div className="w-full">
+				<h1 className="text-4xl font-bold">Shopping Cart</h1>
+				<div className="mt-10 flex flex-col gap-20 md:flex-row">
+					<section className="w-full md:w-2/3">
+						<ul>
+							{cart.cartFindOrCreate.items.map((item) => (
+								<ShoppingCartItem
+									key={item.product.id}
+									item={[item]}
+									isModal={false}
+									cartId={cart.cartFindOrCreate.id}
+								/>
+							))}
+						</ul>
+					</section>
+				</div>
 			</div>
+			<form action={handlePaymentAction}>
+				<button
+					type="submit"
+					className="mt-4 w-full max-w-sm rounded-md border-4 border-transparent bg-purple-500 py-2 font-bold text-white transition-colors hover:border-4 hover:border-purple-900 hover:bg-purple-600"
+				>
+					Pay
+				</button>
+			</form>
 		</>
 	);
 }

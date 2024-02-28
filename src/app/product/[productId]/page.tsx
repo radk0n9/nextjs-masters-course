@@ -6,7 +6,7 @@ import NextImage from "next/image";
 import { revalidateTag } from "next/cache";
 import { getProductsById, getProductsList } from "@/api/prodcuts";
 import { Spinner } from "@/components/atoms/Spinner";
-import { SuggestedProductsList } from "@/components/oragnism /SuggestedProdcuts";
+import { SuggestedProductsList } from "@/components/oragnism/SuggestedProdcuts";
 import { formatPrice } from "@/utils/utils";
 import { AddToCartButton } from "@/components/atoms/AddToCartButton";
 import { getOrCreateCart, addProductToCard } from "@/api/cart";

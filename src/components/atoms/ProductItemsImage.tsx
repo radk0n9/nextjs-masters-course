@@ -1,6 +1,6 @@
 import NextImage from "next/image";
 
-export const ProducItemsImages = ({
+export const ProductItemsImages = ({
 	src,
 	alt,
 	width,

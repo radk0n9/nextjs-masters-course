@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { getProductsSearchBySearch } from "@/api/prodcuts";
-import { ProductList } from "@/components/oragnism /ProductList";
+import { ProductList } from "@/components/oragnism/ProductList";
 import { Spinner } from "@/components/atoms/Spinner";
 
 export default async function SearchQueryPage({

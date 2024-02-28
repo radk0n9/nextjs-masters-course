@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { type Metadata } from "next";
 import { getProductsByCollection } from "@/api/prodcuts";
-import { ProductList } from "@/components/oragnism /ProductList";
+import { ProductList } from "@/components/oragnism/ProductList";
 import { Spinner } from "@/components/atoms/Spinner";
 
 export const generateMetadata = async ({

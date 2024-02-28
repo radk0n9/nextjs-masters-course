@@ -3,6 +3,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import Stripe from "stripe";
+import { revalidateTag } from "next/cache";
 import { getOrCreateCart } from "@/api/cart";
 import { excecuteGraphQL } from "@/api/graphqlApi";
 import { CartRemoveProductDocument, CartSetProductQuantityDocument } from "@/gql/graphql";
@@ -11,8 +12,8 @@ export const changeProductCardQuantity = async (
 	cartId: string,
 	productId: string,
 	quantity: number,
-) => {
-	return excecuteGraphQL({
+): Promise<void> => {
+	await excecuteGraphQL({
 		query: CartSetProductQuantityDocument,
 		variables: {
 			productId: productId,
@@ -23,6 +24,7 @@ export const changeProductCardQuantity = async (
 			tags: ["cart"],
 		},
 	});
+	revalidateTag("cart");
 };
 
 export const removeProductCart = async (cartId: string, productId: string) => {
@@ -30,6 +32,7 @@ export const removeProductCart = async (cartId: string, productId: string) => {
 		query: CartRemoveProductDocument,
 		variables: { cartId: cartId, productId: productId },
 		next: { tags: ["cart"] },
+		cache: "no-store",
 	});
 };
 
