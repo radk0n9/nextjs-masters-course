@@ -22,14 +22,18 @@ export default async function CollectionsPage({ params }: { params: { collection
 		throw new Error("Colletion not found");
 	}
 	return (
-		<div>
-			<div className="mb-8">
-				<h1 className="text-3xl font-bold">{collection.name}</h1>
-				<p className="text-sm">{collection.description}</p>
-			</div>
-			<Suspense fallback={<Spinner />}>
-				<ProductList products={collection.products} />
-			</Suspense>
-		</div>
+		<>
+			<article>
+				<div>
+					<div className="mb-8">
+						<h1 className="text-3xl font-bold">{collection.name}</h1>
+						<p className="text-sm">{collection.description}</p>
+					</div>
+					<Suspense fallback={<Spinner />}>
+						<ProductList products={collection.products} />
+					</Suspense>
+				</div>
+			</article>
+		</>
 	);
 }

@@ -19,10 +19,14 @@ export default async function SearchQueryPage({
 		return <p className="text-lg ">Not products found</p>;
 	}
 	return (
-		<Suspense fallback={<Spinner />}>
-			<div>
-				<ProductList products={products.data} />
-			</div>
-		</Suspense>
+		<>
+			<article>
+				<Suspense fallback={<Spinner />}>
+					<div>
+						<ProductList products={products.data} />
+					</div>
+				</Suspense>
+			</article>
+		</>
 	);
 }

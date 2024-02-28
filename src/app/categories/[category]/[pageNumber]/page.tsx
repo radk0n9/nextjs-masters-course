@@ -35,20 +35,22 @@ export default async function CategoryProductsPage({
 	return (
 		<>
 			<Suspense fallback={<Spinner />}>
-				<div className="pb-5">
-					<h1 className="text-3xl font-semibold ">{products.name}</h1>
-					<p className="text-sm">{products.description}</p>
-				</div>
-				<div>
-					<ProductList products={slicedProducts} />
-				</div>
-				<div>
-					<ProductsPagination
-						numberPages={numberPages}
-						currentPage={currentPage}
-						url={`/categories/${params.category}` as Route}
-					/>
-				</div>
+				<article>
+					<div className="pb-5">
+						<h1 className="text-3xl font-semibold ">{products.name}</h1>
+						<p className="text-sm">{products.description}</p>
+					</div>
+					<div>
+						<ProductList products={slicedProducts} />
+					</div>
+					<div>
+						<ProductsPagination
+							numberPages={numberPages}
+							currentPage={currentPage}
+							url={`/categories/${params.category}` as Route}
+						/>
+					</div>
+				</article>
 			</Suspense>
 		</>
 	);
