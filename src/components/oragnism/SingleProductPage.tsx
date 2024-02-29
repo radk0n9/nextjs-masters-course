@@ -4,16 +4,15 @@ import { revalidateTag } from "next/cache";
 import { SuggestedProductsList } from "@/components/oragnism/SuggestedProdcuts";
 import { formatPrice } from "@/utils/utils";
 import { type ProdcutsByIdQuery } from "@/gql/graphql";
-import { ReviewForm } from "@/components/oragnism/ReviewForm";
+import { ReviewFormWithReviews } from "@/components/oragnism/ReviewFormWithReviews";
 import { AddToCartButton } from "@/components/atoms/AddToCartButton";
 import { addProductToCard, getOrCreateCart } from "@/api/cart";
-import { ReviewProduct } from "@/components/oragnism/ReviewProduct";
 
 type ProductItemListProps = {
 	product: ProdcutsByIdQuery;
 };
 
-export const SingleProductPage = ({ product }: ProductItemListProps) => {
+export const SingleProductPage = async ({ product }: ProductItemListProps) => {
 	async function addToCartAction(_formData: FormData) {
 		"use server";
 
@@ -23,6 +22,8 @@ export const SingleProductPage = ({ product }: ProductItemListProps) => {
 		await addProductToCard(cart?.cartFindOrCreate.id, product.product.id);
 		revalidateTag("cart");
 	}
+	if (!product.product) return null;
+
 	return (
 		<>
 			<div className="flex justify-center gap-5 ">
@@ -58,10 +59,10 @@ export const SingleProductPage = ({ product }: ProductItemListProps) => {
 					)}
 				</aside>
 			</div>
-			<div className="mt-6 grid w-full border-t pt-6 md:grid-cols-2">
-				{product.product?.id && <ReviewForm productId={product.product.id} />}
-				{product.product?.id && <ReviewProduct productId={product.product?.id} />}
-			</div>
+
+			{product.product?.id && (
+				<ReviewFormWithReviews productId={product.product.id} reviews={product.product.reviews} />
+			)}
 		</>
 	);
 };

@@ -89,7 +89,6 @@ export const getProductsSearchBySearch = async (searchQuery: string) => {
 };
 
 export async function addProductReview(formData: FormData) {
-	console.log(formData);
 	return excecuteGraphQL({
 		query: ReviewCreateForProductDocument,
 		variables: {
@@ -100,6 +99,9 @@ export async function addProductReview(formData: FormData) {
 			email: formData.get("email") as string,
 			productId: formData.get("productId") as string,
 		},
+		next: {
+			tags: ["review"],
+		},
 	});
 }
 
@@ -107,6 +109,9 @@ export async function getProductByIdReview(productId: string) {
 	const graphqlRespone = excecuteGraphQL({
 		query: ReviewGetByProductIdDocument,
 		variables: { productId: productId },
+		next: {
+			tags: ["review"],
+		},
 	});
 	return graphqlRespone;
 }

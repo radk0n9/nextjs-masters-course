@@ -14,5 +14,8 @@ query ProdcutsById($id: ID) {
 			height
 			width
 		}
+		reviews {
+			...ReviewItem
+		}
 	}
 }

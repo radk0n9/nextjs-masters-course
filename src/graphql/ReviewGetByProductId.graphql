@@ -6,6 +6,8 @@ query ReviewGetByProductId($productId: ID!) {
 			rating
 			title
 			description
+			id
+			email
 		}
 	}
 }

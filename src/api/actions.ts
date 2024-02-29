@@ -23,6 +23,7 @@ export const removeProductCartAction = async (cartIt: string, productId: string)
 
 export const addProductReviewAction = async (formData: FormData) => {
 	await addProductReview(formData);
+	revalidateTag("review");
 };
 
 export async function handlePaymentAction() {

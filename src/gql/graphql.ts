@@ -311,7 +311,7 @@ export type ProdcutsByIdQueryVariables = Exact<{
 }>;
 
 
-export type ProdcutsByIdQuery = { product?: { id: string, name: string, price: number, description: string, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string, alt: string, height: number, width: number }> } | null };
+export type ProdcutsByIdQuery = { product?: { id: string, name: string, price: number, description: string, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string, alt: string, height: number, width: number }>, reviews: Array<{ author: string, description: string, id: string, rating: number, title: string, email: string }> } | null };
 
 export type ProductsByCategoryBySlugQueryVariables = Exact<{
   slug?: InputMaybe<Scalars['String']['input']>;
@@ -370,12 +370,14 @@ export type ReviewCreateForProductMutationVariables = Exact<{
 
 export type ReviewCreateForProductMutation = { reviewCreate: { id: string } };
 
+export type ReviewItemFragment = { author: string, description: string, id: string, rating: number, title: string, email: string };
+
 export type ReviewGetByProductIdQueryVariables = Exact<{
   productId: Scalars['ID']['input'];
 }>;
 
 
-export type ReviewGetByProductIdQuery = { product?: { id: string, reviews: Array<{ author: string, rating: number, title: string, description: string }> } | null };
+export type ReviewGetByProductIdQuery = { product?: { id: string, reviews: Array<{ author: string, rating: number, title: string, description: string, id: string, email: string }> } | null };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -430,6 +432,16 @@ export const ProductsListItemFragmentDoc = new TypedDocumentString(`
   price
 }
     `, {"fragmentName":"ProductsListItem"}) as unknown as TypedDocumentString<ProductsListItemFragment, unknown>;
+export const ReviewItemFragmentDoc = new TypedDocumentString(`
+    fragment ReviewItem on Review {
+  author
+  description
+  id
+  rating
+  title
+  email
+}
+    `, {"fragmentName":"ReviewItem"}) as unknown as TypedDocumentString<ReviewItemFragment, unknown>;
 export const CartAddProductDocument = new TypedDocumentString(`
     mutation CartAddProduct($id: ID!, $productId: String!) {
   cartAddItem(id: $id, input: {item: {productId: $productId}}) {
@@ -511,9 +523,19 @@ export const ProdcutsByIdDocument = new TypedDocumentString(`
       height
       width
     }
+    reviews {
+      ...ReviewItem
+    }
   }
 }
-    `) as unknown as TypedDocumentString<ProdcutsByIdQuery, ProdcutsByIdQueryVariables>;
+    fragment ReviewItem on Review {
+  author
+  description
+  id
+  rating
+  title
+  email
+}`) as unknown as TypedDocumentString<ProdcutsByIdQuery, ProdcutsByIdQueryVariables>;
 export const ProductsByCategoryBySlugDocument = new TypedDocumentString(`
     query ProductsByCategoryBySlug($slug: String) {
   category(slug: $slug) {
@@ -678,6 +700,8 @@ export const ReviewGetByProductIdDocument = new TypedDocumentString(`
       rating
       title
       description
+      id
+      email
     }
   }
 }
