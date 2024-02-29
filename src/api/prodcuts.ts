@@ -7,6 +7,8 @@ import {
 	ProductsPaginatedListDocument,
 	ProductsSearchBySearchDocument,
 	ProductsSuggestedBySlugDocument,
+	ReviewCreateForProductDocument,
+	ReviewGetByProductIdDocument,
 } from "@/gql/graphql";
 import { excecuteGraphQL } from "@/api/graphqlApi";
 loadEnvConfig(process.cwd());
@@ -85,3 +87,26 @@ export const getProductsSearchBySearch = async (searchQuery: string) => {
 	});
 	return graphqlResponse.products;
 };
+
+export async function addProductReview(formData: FormData) {
+	console.log(formData);
+	return excecuteGraphQL({
+		query: ReviewCreateForProductDocument,
+		variables: {
+			title: formData.get("headline") as string,
+			content: formData.get("content") as string,
+			rating: parseInt(formData.get("rating") as string),
+			name: formData.get("name") as string,
+			email: formData.get("email") as string,
+			productId: formData.get("productId") as string,
+		},
+	});
+}
+
+export async function getProductByIdReview(productId: string) {
+	const graphqlRespone = excecuteGraphQL({
+		query: ReviewGetByProductIdDocument,
+		variables: { productId: productId },
+	});
+	return graphqlRespone;
+}

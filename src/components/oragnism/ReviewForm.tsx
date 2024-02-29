@@ -1,3 +1,4 @@
+import { addProductReviewAction } from "@/api/actions";
 import { InputReviewForm } from "@/components/atoms/InputReviewForm";
 import { RatingReviewForm } from "@/components/atoms/RatingReviewForm";
 import { SumbitButtonReview } from "@/components/atoms/SubmitButtonReviewForm";
@@ -8,8 +9,8 @@ export const ReviewForm = ({ productId }: { productId: string }) => {
 		<>
 			<section>
 				<h3 className="mb-5 text-xl font-semibold">Customer Reviews</h3>
-				<form data-testid="add-review-form">
-					<input type="hidden" id={productId} />
+				<form data-testid="add-review-form" action={addProductReviewAction}>
+					<input type="hidden" name="productId" value={productId} />
 					{reviewItemsForm.map((item) => {
 						if (item.type === "rating") {
 							return <RatingReviewForm key={item.name} />;

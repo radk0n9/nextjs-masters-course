@@ -7,6 +7,7 @@ import { type ProdcutsByIdQuery } from "@/gql/graphql";
 import { ReviewForm } from "@/components/oragnism/ReviewForm";
 import { AddToCartButton } from "@/components/atoms/AddToCartButton";
 import { addProductToCard, getOrCreateCart } from "@/api/cart";
+import { ReviewProduct } from "@/components/oragnism/ReviewProduct";
 
 type ProductItemListProps = {
 	product: ProdcutsByIdQuery;
@@ -59,7 +60,7 @@ export const SingleProductPage = ({ product }: ProductItemListProps) => {
 			</div>
 			<div className="mt-6 grid w-full border-t pt-6 md:grid-cols-2">
 				{product.product?.id && <ReviewForm productId={product.product.id} />}
-				<p>test</p>
+				{product.product?.id && <ReviewProduct productId={product.product?.id} />}
 			</div>
 		</>
 	);

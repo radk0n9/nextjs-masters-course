@@ -4,37 +4,25 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import Stripe from "stripe";
 import { revalidateTag } from "next/cache";
-import { getOrCreateCart } from "@/api/cart";
-import { excecuteGraphQL } from "@/api/graphqlApi";
-import { CartRemoveProductDocument, CartSetProductQuantityDocument } from "@/gql/graphql";
+import { changeProductCardQuantity, getOrCreateCart, removeProductCart } from "@/api/cart";
+import { addProductReview } from "@/api/prodcuts";
 
-export const changeProductCardQuantity = async (
+export const changeProductCardQuantityAction = async (
 	cartId: string,
 	productId: string,
 	quantity: number,
 ): Promise<void> => {
-	await excecuteGraphQL({
-		query: CartSetProductQuantityDocument,
-		variables: {
-			productId: productId,
-			quantity: quantity,
-			id: cartId,
-		},
-		next: {
-			tags: ["cart"],
-		},
-	});
+	await changeProductCardQuantity(cartId, productId, quantity);
 	revalidateTag("cart");
 };
 
-export const removeProductCart = async (cartId: string, productId: string) => {
-	return excecuteGraphQL({
-		query: CartRemoveProductDocument,
-		variables: { cartId: cartId, productId: productId },
-		next: { tags: ["cart"] },
-		cache: "no-store",
-	});
+export const removeProductCartAction = async (cartIt: string, productId: string) => {
+	await removeProductCart(cartIt, productId);
 	revalidateTag("cart");
+};
+
+export const addProductReviewAction = async (formData: FormData) => {
+	await addProductReview(formData);
 };
 
 export async function handlePaymentAction() {

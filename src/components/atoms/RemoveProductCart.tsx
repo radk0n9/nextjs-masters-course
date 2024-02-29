@@ -1,13 +1,12 @@
 "use client";
 
 import { useTransition } from "react";
-import { useRouter } from "next/navigation";
 import { Trash2 } from "lucide-react";
-import { removeProductCart } from "@/app/cart/actions";
+import { removeProductCartAction } from "@/api/actions";
 
 export const RemoveProductCart = ({ cartId, productId }: { cartId: string; productId: string }) => {
 	const [isPending, startTransition] = useTransition();
-	const router = useRouter();
+	//const router = useRouter();
 
 	return (
 		<>
@@ -17,8 +16,7 @@ export const RemoveProductCart = ({ cartId, productId }: { cartId: string; produ
 				type="submit"
 				onClick={() => {
 					startTransition(async () => {
-						await removeProductCart(cartId, productId);
-						router.refresh();
+						await removeProductCartAction(cartId, productId);
 					});
 				}}
 			>

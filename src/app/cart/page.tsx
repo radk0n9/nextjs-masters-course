@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { getOrCreateCart } from "@/api/cart";
-import { handlePaymentAction } from "@/app/cart/actions";
+import { handlePaymentAction } from "@/api/actions";
 import { ShoppingCartItem } from "@/components/atoms/ShoppingCartItem";
 
 export default async function CartPage() {

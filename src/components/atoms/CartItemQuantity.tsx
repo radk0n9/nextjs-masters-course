@@ -1,7 +1,7 @@
 "use client";
 
 import { useOptimistic } from "react";
-import { changeProductCardQuantity } from "@/app/cart/actions";
+import { changeProductCardQuantityAction } from "@/api/actions";
 
 export const CartItemQuantity = ({
 	cartId,
@@ -16,7 +16,6 @@ export const CartItemQuantity = ({
 		quantity,
 		(_state, newQunatity: number) => newQunatity,
 	);
-
 	return (
 		<form className="flex items-center justify-center gap-2">
 			<div className="flex items-center">
@@ -28,7 +27,7 @@ export const CartItemQuantity = ({
 							return;
 						}
 						setOptimisticQuantity(optimisticQuantity - 1);
-						await changeProductCardQuantity(
+						await changeProductCardQuantityAction(
 							(cartId = cartId),
 							(productId = productId),
 							(quantity = optimisticQuantity - 1),
@@ -45,7 +44,7 @@ export const CartItemQuantity = ({
 					className="h-8 w-8 rounded-full bg-zinc-300 shadow-lg brightness-90 transition-transform duration-200 hover:scale-95 hover:brightness-100 disabled:cursor-wait disabled:bg-zinc-500"
 					formAction={async () => {
 						setOptimisticQuantity(optimisticQuantity + 1);
-						await changeProductCardQuantity(
+						await changeProductCardQuantityAction(
 							(cartId = cartId),
 							(productId = productId),
 							(quantity = optimisticQuantity + 1),

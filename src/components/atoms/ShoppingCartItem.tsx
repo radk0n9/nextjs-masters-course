@@ -1,4 +1,3 @@
-import { revalidateTag } from "next/cache";
 import { CartItemQuantity } from "@/components/atoms/CartItemQuantity";
 import { ProductItemsImages } from "@/components/atoms/ProductItemsImage";
 import { RemoveProductCart } from "@/components/atoms/RemoveProductCart";
@@ -16,10 +15,6 @@ export const ShoppingCartItem = ({
 }) => {
 	if (!item[0]?.product) {
 		return null;
-	}
-	async function removeProduct(_formData: FormData) {
-		"use server";
-		revalidateTag("cart");
 	}
 
 	return (
@@ -56,9 +51,7 @@ export const ShoppingCartItem = ({
 									/>
 								</div>
 								<div className="flex">
-									<form action={removeProduct}>
-										<RemoveProductCart cartId={cartId} productId={item[0]?.product.id} />
-									</form>
+									<RemoveProductCart cartId={cartId} productId={item[0]?.product.id} />
 								</div>
 							</>
 						)}

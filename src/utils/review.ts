@@ -27,6 +27,6 @@ export const reviewItemsForm = [
 		label: "Email",
 		name: "email",
 		type: "email",
-		required: false,
+		required: true,
 	},
 ];
