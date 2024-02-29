@@ -1,13 +1,27 @@
 import NextImage from "next/image";
+import { cookies } from "next/headers";
+import { revalidateTag } from "next/cache";
 import { SuggestedProductsList } from "@/components/oragnism/SuggestedProdcuts";
 import { formatPrice } from "@/utils/utils";
 import { type ProdcutsByIdQuery } from "@/gql/graphql";
+import { ReviewForm } from "@/components/oragnism/ReviewForm";
+import { AddToCartButton } from "@/components/atoms/AddToCartButton";
+import { addProductToCard, getOrCreateCart } from "@/api/cart";
 
 type ProductItemListProps = {
 	product: ProdcutsByIdQuery;
 };
 
 export const SingleProductPage = ({ product }: ProductItemListProps) => {
+	async function addToCartAction(_formData: FormData) {
+		"use server";
+
+		const cart = await getOrCreateCart();
+		cookies().set("cartId", cart?.cartFindOrCreate.id, { httpOnly: true, sameSite: "lax" });
+		if (!product.product?.id) throw new Error("No product id");
+		await addProductToCard(cart?.cartFindOrCreate.id, product.product.id);
+		revalidateTag("cart");
+	}
 	return (
 		<>
 			<div className="flex justify-center gap-5 ">
@@ -30,9 +44,9 @@ export const SingleProductPage = ({ product }: ProductItemListProps) => {
 					<p className="md:xl my-2 text-lg font-semibold">
 						{product.product?.price && <span>{formatPrice(product.product?.price / 100)}</span>}
 					</p>
-					<button className="mt-2 rounded-lg bg-zinc-300 p-2 shadow-lg brightness-90 transition-transform duration-200 hover:scale-95 hover:brightness-100">
-						Add to card
-					</button>
+					<form action={addToCartAction}>
+						<AddToCartButton />
+					</form>
 					<p className="mt-4 text-sm tracking-tight">{product.product?.description}</p>
 				</div>
 			</div>
@@ -42,6 +56,10 @@ export const SingleProductPage = ({ product }: ProductItemListProps) => {
 						<SuggestedProductsList slug={product.product?.categories[0].slug} />
 					)}
 				</aside>
+			</div>
+			<div className="mt-6 grid w-full border-t pt-6 md:grid-cols-2">
+				{product.product?.id && <ReviewForm productId={product.product.id} />}
+				<p>test</p>
 			</div>
 		</>
 	);

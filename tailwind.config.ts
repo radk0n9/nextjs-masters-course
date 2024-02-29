@@ -13,7 +13,7 @@ const config: Config = {
 				"gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
 			},
 			animation: {
-				slideRight: "slide-from-right 300ms ease-in-out",
+				slideRight: "slide-from-right 200ms ease-in-out",
 				slideLeft: "slide-from-left 300ms ease-in-out",
 			},
 			keyframes: {

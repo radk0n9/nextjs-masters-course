@@ -34,6 +34,7 @@ export const removeProductCart = async (cartId: string, productId: string) => {
 		next: { tags: ["cart"] },
 		cache: "no-store",
 	});
+	revalidateTag("cart");
 };
 
 export async function handlePaymentAction() {

@@ -14,6 +14,7 @@ export const RemoveProductCart = ({ cartId, productId }: { cartId: string; produ
 			<button
 				className="text-red-900 transition-colors duration-300 hover:text-red-500 disabled:cursor-wait disabled:text-gray-400"
 				disabled={isPending}
+				type="submit"
 				onClick={() => {
 					startTransition(async () => {
 						await removeProductCart(cartId, productId);

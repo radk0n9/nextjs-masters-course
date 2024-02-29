@@ -311,7 +311,7 @@ export type ProdcutsByIdQueryVariables = Exact<{
 }>;
 
 
-export type ProdcutsByIdQuery = { product?: { name: string, price: number, description: string, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string, alt: string, height: number, width: number }> } | null };
+export type ProdcutsByIdQuery = { product?: { id: string, name: string, price: number, description: string, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string, alt: string, height: number, width: number }> } | null };
 
 export type ProductsByCategoryBySlugQueryVariables = Exact<{
   slug?: InputMaybe<Scalars['String']['input']>;
@@ -478,6 +478,7 @@ export const CartSetProductQuantityDocument = new TypedDocumentString(`
 export const ProdcutsByIdDocument = new TypedDocumentString(`
     query ProdcutsById($id: ID) {
   product(id: $id) {
+    id
     name
     categories {
       name
