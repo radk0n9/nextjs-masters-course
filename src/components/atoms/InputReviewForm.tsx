@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 export const InputReviewForm = ({
 	label,
 	name,
@@ -9,6 +11,22 @@ export const InputReviewForm = ({
 	type: string;
 	required: boolean;
 }) => {
+	const [email, setEmail] = useState("");
+	const [error, setError] = useState<string | null>(null);
+
+	function isValid(email: string) {
+		return /\S+@\S+\.\S+/.test(email);
+	}
+
+	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		if (!isValid(event.target.value)) {
+			setError("Please enter a valid email address");
+		} else {
+			setError(null);
+		}
+		setEmail(event.target.value);
+	};
+
 	return (
 		<label className="mb-3 flex max-w-md flex-col gap-1">
 			<span className="text-sm">{label}</span>
@@ -23,9 +41,12 @@ export const InputReviewForm = ({
 					required={required}
 					name={name}
 					type={type}
+					value={type === "email" ? email : undefined}
+					onChange={type === "email" ? handleChange : undefined}
 					className="mt-1 min-h-3 rounded-md border p-2 text-sm shadow-sm focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
 				/>
 			)}
+			{error && <span className="text-right text-sm text-red-500">{error}</span>}
 		</label>
 	);
 };

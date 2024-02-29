@@ -17,7 +17,9 @@ export const ReviewFormWithReviews = ({
 }) => {
 	const [optimisticReviews, setOptimisticReviews] = useOptimistic(
 		reviews,
-		(_state, newReviews: ReviewItemFragment[]) => newReviews,
+		(_currentOptimisticReviews, newReviews: ReviewItemFragment[]) => {
+			return newReviews;
+		},
 	);
 
 	return (

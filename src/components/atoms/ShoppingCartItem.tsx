@@ -1,3 +1,4 @@
+import NextLink from "next/link";
 import { CartItemQuantity } from "@/components/atoms/CartItemQuantity";
 import { ProductItemsImages } from "@/components/atoms/ProductItemsImage";
 import { RemoveProductCart } from "@/components/atoms/RemoveProductCart";
@@ -33,7 +34,12 @@ export const ShoppingCartItem = ({
 				<div className="flex w-full">
 					<div className="flex w-full">
 						<div className="flex max-w-sm flex-col gap-2">
-							<h3 className="text-xl font-semibold">{item[0]?.product.name}</h3>
+							<NextLink
+								href={`/product/${item[0].product.id}`}
+								className="text-xl font-semibold transition-colors duration-200 hover:text-purple-900 hover:underline"
+							>
+								{item[0]?.product.name}
+							</NextLink>
 							<p className="text-sm text-purple-500">{item[0]?.product.categories[0]?.name}</p>
 							<span className="text-lg font-medium">
 								{formatPrice(item[0]?.product.price / 100)}

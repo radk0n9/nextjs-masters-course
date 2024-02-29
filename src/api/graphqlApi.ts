@@ -1,3 +1,4 @@
+//import { redirect } from "next/navigation";
 import { type TypedDocumentString } from "@/gql/graphql";
 
 export const excecuteGraphQL = async <TResult, TVariables>({
@@ -38,6 +39,7 @@ export const excecuteGraphQL = async <TResult, TVariables>({
 	const graphqlResponse = (await res.json()) as GraphQLResponse<TResult>;
 	if (graphqlResponse.errors) {
 		console.dir(graphqlResponse.errors, { depth: 999 });
+		//redirect("/");
 		throw TypeError(`GraphQL Error`, {
 			cause: graphqlResponse.errors,
 		});
