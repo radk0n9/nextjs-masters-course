@@ -1,6 +1,6 @@
 "use server";
 
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import Stripe from "stripe";
 import { revalidateTag } from "next/cache";
@@ -37,6 +37,7 @@ export const getCartCompleteAction = async (cartId: string) => {
 };
 
 export async function handlePaymentAction() {
+	const headersList = headers();
 	if (!process.env.STRIPE_SECRET_KEY) {
 		throw new Error("Missing STRIPE_SECRET_KEY");
 	}
@@ -64,8 +65,8 @@ export async function handlePaymentAction() {
 			quantity: item.quantity,
 		})),
 		mode: "payment",
-		success_url: "https://localhost:3000/cart/success?sessionId={CHECKOUT_SESSION_ID}",
-		cancel_url: "https://localhost:3000/cart/cancel",
+		success_url: `${headersList.get("origin")}/cart/success?sessionId={CHECKOUT_SESSION_ID}`,
+		cancel_url: `${headersList.get("origin")}/cart/cancel`,
 	});
 	if (!checkoutSession.url) {
 		throw new Error("Something went wrong");
