@@ -12,7 +12,7 @@ export const ProductItemsImages = ({
 	height: number;
 }) => {
 	return (
-		<div className="aspect-square overflow-hidden rounded-lg border bg-stone-200 brightness-90 hover:brightness-100">
+		<div className="aspect-square overflow-hidden rounded-lg border bg-slate-50 brightness-90 hover:brightness-100">
 			<NextImage
 				width={width}
 				height={height}

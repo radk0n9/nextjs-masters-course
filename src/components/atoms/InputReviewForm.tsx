@@ -5,11 +5,13 @@ export const InputReviewForm = ({
 	name,
 	type,
 	required,
+	placeholder,
 }: {
 	label: string;
 	name: string;
 	type: string;
 	required: boolean;
+	placeholder: string;
 }) => {
 	const [email, setEmail] = useState("");
 	const [error, setError] = useState<string | null>(null);
@@ -29,21 +31,23 @@ export const InputReviewForm = ({
 
 	return (
 		<label className="mb-3 flex max-w-md flex-col gap-1">
-			<span className="text-sm">{label}</span>
+			<span className="text-sm text-gray-600">{label}</span>
 			{type === "area" ? (
 				<textarea
 					required={required}
+					placeholder={placeholder}
 					name={name}
-					className=" mt-1 max-h-48 min-h-3 rounded-md border p-2 text-sm shadow-sm focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
+					className="mt-1 max-h-48 min-h-3 rounded-md border p-2 text-sm shadow-sm focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
 				></textarea>
 			) : (
 				<input
 					required={required}
 					name={name}
+					placeholder={placeholder}
 					type={type}
 					value={type === "email" ? email : undefined}
 					onChange={type === "email" ? handleChange : undefined}
-					className="mt-1 min-h-3 rounded-md border p-2 text-sm shadow-sm focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
+					className={`mt-1 min-h-3 rounded-md border p-2 text-sm shadow-sm focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500 ${error ? `text-red-600` : `text-green-600`}`}
 				/>
 			)}
 			{error && <span className="text-right text-sm text-red-500">{error}</span>}

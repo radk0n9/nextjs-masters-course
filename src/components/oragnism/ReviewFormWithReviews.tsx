@@ -64,6 +64,7 @@ export const ReviewFormWithReviews = ({
 									name={item.name}
 									type={item.type}
 									required={item.required}
+									placeholder={item.placeholder}
 								/>
 							);
 						})}

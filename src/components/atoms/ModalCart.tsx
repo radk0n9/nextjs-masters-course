@@ -15,7 +15,7 @@ export const ModalCart = async ({ cart }: { cart: CartFindOrCreateMutation }) =>
 				</a>
 			</div>
 			<div className="flex">
-				<ul className="mx-4 mt-16 ">
+				<ul className="mx-4 mt-10">
 					{cart.cartFindOrCreate.items.map((item) => (
 						<ShoppingCartItem
 							key={item.product.id}

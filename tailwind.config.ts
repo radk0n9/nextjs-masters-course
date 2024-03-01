@@ -15,6 +15,7 @@ const config: Config = {
 			animation: {
 				slideRight: "slide-from-right 200ms ease-in-out",
 				slideLeft: "slide-from-left 300ms ease-in-out",
+				spinSlow: "spin 2s linear infinite",
 			},
 			keyframes: {
 				["slide-from-right"]: {

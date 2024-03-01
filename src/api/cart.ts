@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { excecuteGraphQL } from "@/api/graphqlApi";
 import {
 	CartAddProductDocument,
+	CartCompleteDocument,
 	CartFindOrCreateDocument,
 	CartRemoveProductDocument,
 	CartSetProductQuantityDocument,
@@ -55,5 +56,13 @@ export async function changeProductCardQuantity(
 		next: {
 			tags: ["cart"],
 		},
+	});
+}
+
+export async function getCartComplete(cartId: string) {
+	return excecuteGraphQL({
+		query: CartCompleteDocument,
+		variables: { cartId: cartId },
+		next: { tags: ["cart"] },
 	});
 }

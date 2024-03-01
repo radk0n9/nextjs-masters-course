@@ -4,7 +4,12 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import Stripe from "stripe";
 import { revalidateTag } from "next/cache";
-import { changeProductCardQuantity, getOrCreateCart, removeProductCart } from "@/api/cart";
+import {
+	changeProductCardQuantity,
+	getCartComplete,
+	getOrCreateCart,
+	removeProductCart,
+} from "@/api/cart";
 import { addProductReview } from "@/api/prodcuts";
 
 export const changeProductCardQuantityAction = async (
@@ -24,6 +29,11 @@ export const removeProductCartAction = async (cartIt: string, productId: string)
 export const addProductReviewAction = async (formData: FormData) => {
 	await addProductReview(formData);
 	revalidateTag("review");
+};
+
+export const getCartCompleteAction = async (cartId: string) => {
+	await getCartComplete(cartId);
+	//revalidateTag("cart");
 };
 
 export async function handlePaymentAction() {

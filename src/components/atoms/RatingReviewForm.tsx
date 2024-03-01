@@ -25,8 +25,8 @@ export const RatingReviewForm = () => {
 
 	return (
 		<>
-			<span className="text-sm">Rating</span>
-			<div className="mb-3 flex items-center">
+			<span className="text-sm text-gray-600">Rating</span>
+			<div className="mb-3 mt-1 flex items-center">
 				{[1, 2, 3, 4, 5].map((star) => (
 					<label
 						key={star}

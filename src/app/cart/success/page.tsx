@@ -22,9 +22,14 @@ export default async function CartSuccessPage({
 	const session = stripe.checkout.sessions.retrieve(searchParams.sessionId);
 
 	return (
-		<div>
-			<h2>{(await session).payment_status}</h2>
-			<p>{(await session).status}</p>
+		<div className="flex flex-col items-center justify-center">
+			<h1 className="mt-10 text-3xl font-semibold">Thank you for order in our store!</h1>
+			<div className="mt-2 flex items-center gap-1 border-t pt-2 text-lg font-normal">
+				<h2 className="flex ">Your payment status:</h2>
+				<p className="flex capitalize">{(await session).payment_status}</p>
+			</div>
+
+			{/* <p>{(await session).status}</p> */}
 		</div>
 	);
 }

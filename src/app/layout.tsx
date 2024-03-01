@@ -24,9 +24,9 @@ export default function RootLayout({
 		<html lang="en">
 			<body className={inter.className}>
 				<Navbar />
-				<section className="mx-auto max-w-md rounded-md bg-zinc-100 p-12 sm:max-w-2xl sm:py-10 md:max-w-6xl lg:max-w-7xl">
+				<main className="max-w-mde mx-auto p-12 sm:max-w-2xl sm:py-10 md:max-w-6xl lg:max-w-7xl">
 					{children}
-				</section>
+				</main>
 
 				<SpeedInsights />
 				<Footer />

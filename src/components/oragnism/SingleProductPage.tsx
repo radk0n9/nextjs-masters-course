@@ -26,7 +26,7 @@ export const SingleProductPage = async ({ product }: ProductItemListProps) => {
 
 	return (
 		<>
-			<div className="flex justify-center gap-5 ">
+			<div className="flex justify-center gap-5">
 				<div>
 					{product.product?.images[0] && (
 						<NextImage
