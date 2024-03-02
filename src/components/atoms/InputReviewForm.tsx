@@ -47,7 +47,7 @@ export const InputReviewForm = ({
 					type={type}
 					value={type === "email" ? email : undefined}
 					onChange={type === "email" ? handleChange : undefined}
-					className={`mt-1 min-h-3 rounded-md border p-2 text-sm shadow-sm focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500 ${error ? `text-red-600` : `text-green-600`}`}
+					className={`mt-1 min-h-3 rounded-md border p-2 text-sm shadow-sm focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500`}
 				/>
 			)}
 			{error && <span className="text-right text-sm text-red-500">{error}</span>}

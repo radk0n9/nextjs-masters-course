@@ -47,7 +47,6 @@ export const ReviewFormWithReviews = ({
 									title: title,
 								},
 							];
-
 							setOptimisticReviews(optimisticReviews);
 							await addProductReviewAction(formData);
 						}}
