@@ -346,6 +346,8 @@ export type ProductsListItemFragment = { id: string, name: string, price: number
 export type ProductsPaginatedListQueryVariables = Exact<{
   take: Scalars['Int']['input'];
   skip?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<ProductSortBy>;
+  order?: InputMaybe<SortDirection>;
 }>;
 
 
@@ -384,7 +386,7 @@ export type ReviewGetByProductIdQueryVariables = Exact<{
 }>;
 
 
-export type ReviewGetByProductIdQuery = { product?: { id: string, reviews: Array<{ author: string, rating: number, title: string, description: string, id: string, email: string }> } | null };
+export type ReviewGetByProductIdQuery = { product?: { id: string, reviews: Array<{ author: string, description: string, id: string, rating: number, title: string, email: string }> } | null };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -452,28 +454,30 @@ export const ReviewItemFragmentDoc = new TypedDocumentString(`
 export const CartAddProductDocument = new TypedDocumentString(`
     mutation CartAddProduct($id: ID!, $productId: String!) {
   cartAddItem(id: $id, input: {item: {productId: $productId}}) {
-    id
-    items {
-      quantity
-      product {
-        id
+    ...Cart
+  }
+}
+    fragment Cart on Cart {
+  id
+  items {
+    quantity
+    product {
+      id
+      name
+      price
+      categories {
+        slug
         name
-        price
-        categories {
-          slug
-          name
-        }
-        images {
-          url
-          alt
-          height
-          width
-        }
+      }
+      images {
+        url
+        alt
+        height
+        width
       }
     }
   }
-}
-    `) as unknown as TypedDocumentString<CartAddProductMutation, CartAddProductMutationVariables>;
+}`) as unknown as TypedDocumentString<CartAddProductMutation, CartAddProductMutationVariables>;
 export const CartCompleteDocument = new TypedDocumentString(`
     mutation CartComplete($cartId: ID!) {
   cartComplete(cartId: $cartId) {
@@ -487,28 +491,30 @@ export const CartCompleteDocument = new TypedDocumentString(`
 export const CartFindOrCreateDocument = new TypedDocumentString(`
     mutation CartFindOrCreate($id: ID!) {
   cartFindOrCreate(id: $id, input: {}) {
-    id
-    items {
-      quantity
-      product {
-        id
+    ...Cart
+  }
+}
+    fragment Cart on Cart {
+  id
+  items {
+    quantity
+    product {
+      id
+      name
+      price
+      categories {
+        slug
         name
-        price
-        categories {
-          slug
-          name
-        }
-        images {
-          url
-          alt
-          height
-          width
-        }
+      }
+      images {
+        url
+        alt
+        height
+        width
       }
     }
   }
-}
-    `) as unknown as TypedDocumentString<CartFindOrCreateMutation, CartFindOrCreateMutationVariables>;
+}`) as unknown as TypedDocumentString<CartFindOrCreateMutation, CartFindOrCreateMutationVariables>;
 export const CartRemoveProductDocument = new TypedDocumentString(`
     mutation CartRemoveProduct($cartId: ID!, $productId: ID!) {
   cartRemoveItem(id: $cartId, productId: $productId) {
@@ -626,8 +632,8 @@ export const ProductsGetListDocument = new TypedDocumentString(`
   price
 }`) as unknown as TypedDocumentString<ProductsGetListQuery, ProductsGetListQueryVariables>;
 export const ProductsPaginatedListDocument = new TypedDocumentString(`
-    query ProductsPaginatedList($take: Int!, $skip: Int) {
-  products(take: $take, skip: $skip) {
+    query ProductsPaginatedList($take: Int!, $skip: Int, $orderBy: ProductSortBy, $order: SortDirection) {
+  products(take: $take, skip: $skip, orderBy: $orderBy, order: $order) {
     data {
       ...ProductsListItem
     }
@@ -713,13 +719,15 @@ export const ReviewGetByProductIdDocument = new TypedDocumentString(`
   product(id: $productId) {
     id
     reviews {
-      author
-      rating
-      title
-      description
-      id
-      email
+      ...ReviewItem
     }
   }
 }
-    `) as unknown as TypedDocumentString<ReviewGetByProductIdQuery, ReviewGetByProductIdQueryVariables>;
+    fragment ReviewItem on Review {
+  author
+  description
+  id
+  rating
+  title
+  email
+}`) as unknown as TypedDocumentString<ReviewGetByProductIdQuery, ReviewGetByProductIdQueryVariables>;

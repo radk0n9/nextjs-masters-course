@@ -1,6 +1,7 @@
 import { loadEnvConfig } from "@next/env";
 import {
 	ProdcutsByIdDocument,
+	type ProductSortBy,
 	ProductsByCategoryBySlugDocument,
 	ProductsByCollectionBySlugDocument,
 	ProductsGetListDocument,
@@ -9,6 +10,7 @@ import {
 	ProductsSuggestedBySlugDocument,
 	ReviewCreateForProductDocument,
 	ReviewGetByProductIdDocument,
+	type SortDirection,
 } from "@/gql/graphql";
 import { excecuteGraphQL } from "@/api/graphqlApi";
 loadEnvConfig(process.cwd());
@@ -64,12 +66,18 @@ export const getProductsSuggestedBySlug = async (slug: string) => {
 	return graphqlResponse.category?.products;
 };
 
-export const getProductsPaginatedList = async (takeNumber: number, skipNumber: number) => {
+export const getProductsPaginatedList = async (
+	takeNumber: number,
+	skipNumber: number,
+	sort?: { orderBy?: ProductSortBy; order?: SortDirection },
+) => {
 	const graphqlResponse = await excecuteGraphQL({
 		query: ProductsPaginatedListDocument,
 		variables: {
 			take: takeNumber,
 			skip: skipNumber,
+			orderBy: sort?.orderBy,
+			order: sort?.order,
 		},
 	});
 	return graphqlResponse.products;

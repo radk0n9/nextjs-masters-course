@@ -14,7 +14,7 @@ export const ProductItemsDescription = ({
 				<h3 className="text-sm font-semibold md:text-base">{name}</h3>
 				<p className="text-sm md:text-base">{categories[0] && <span>{categories[0].name}</span>}</p>
 			</div>
-			<p className="text-sm font-semibold md:text-base">
+			<p className="text-sm font-semibold md:text-base" data-testid="product-price">
 				<span>{formatPrice(price / 100)}</span>
 			</p>
 		</div>

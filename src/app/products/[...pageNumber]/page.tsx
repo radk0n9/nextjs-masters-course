@@ -5,6 +5,8 @@ import { getProductsPaginatedList } from "@/api/prodcuts";
 import { ProductList } from "@/components/oragnism/ProductList";
 import { Spinner } from "@/components/atoms/Spinner";
 import { ProductsPagination } from "@/components/atoms/ProductsPagination";
+import { ProductsHeader } from "@/components/atoms/ProductsHeader";
+import { type ProductSortBy } from "@/gql/graphql";
 
 export const generateMetadata = async ({
 	params,
@@ -25,9 +27,27 @@ export const generateStaticParams = async () => {
 	}));
 };
 
-export default async function ProductsPage({ params }: { params: { pageNumber: string[] } }) {
+export default async function ProductsPage({
+	params,
+	searchParams,
+}: {
+	params: { pageNumber: string[] };
+	searchParams: { sort?: string };
+}) {
 	const currentPage = Number(params.pageNumber[0]);
-	const products = await getProductsPaginatedList(8, (Number(currentPage) - 1) * 8);
+	const products = await getProductsPaginatedList(
+		8,
+		(Number(currentPage) - 1) * 8,
+		searchParams.sort
+			? {
+					orderBy: searchParams.sort
+						.toUpperCase()
+						.replace("ASC", "")
+						.replace("DESC", "") as ProductSortBy,
+					order: searchParams.sort?.toUpperCase().includes("ASC") ? "ASC" : "DESC",
+				}
+			: { orderBy: "DEFAULT", order: "DESC" },
+	);
 	const numberPages = Math.round(products.meta.total / 8);
 
 	if (params.pageNumber.length >= 2) {
@@ -37,7 +57,7 @@ export default async function ProductsPage({ params }: { params: { pageNumber: s
 		<>
 			<article>
 				<div>
-					<h1 className="mb-5 text-center text-2xl font-semibold">Page {params.pageNumber}</h1>
+					<ProductsHeader pageNumber={params.pageNumber} />
 					<h2 className="sr-only">Products</h2>
 					<Suspense fallback={<Spinner />}>
 						<ProductList products={products.data} />
