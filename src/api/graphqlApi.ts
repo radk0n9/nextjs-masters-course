@@ -1,9 +1,19 @@
+//import { redirect } from "next/navigation";
 import { type TypedDocumentString } from "@/gql/graphql";
 
-export const excecuteGraphQL = async <TResult, TVariables>(
-	query: TypedDocumentString<TResult, TVariables>,
-	variables: TVariables,
-): Promise<TResult> => {
+export const excecuteGraphQL = async <TResult, TVariables>({
+	query,
+	variables,
+	cache,
+	next,
+	headers,
+}: {
+	query: TypedDocumentString<TResult, TVariables>;
+	cache?: RequestCache;
+	headers?: HeadersInit;
+	next?: NextFetchRequestConfig | undefined;
+	variables: TVariables;
+}): Promise<TResult> => {
 	if (!process.env.GRAPHQL_URL) {
 		throw TypeError("GRAPHQL_URL is not defined");
 	}
@@ -15,8 +25,11 @@ export const excecuteGraphQL = async <TResult, TVariables>(
 			variables,
 		}),
 		headers: {
+			...headers,
 			"Content-Type": "application/json",
 		},
+		next,
+		cache,
 	});
 
 	type GraphQLResponse<T> =
@@ -25,6 +38,8 @@ export const excecuteGraphQL = async <TResult, TVariables>(
 
 	const graphqlResponse = (await res.json()) as GraphQLResponse<TResult>;
 	if (graphqlResponse.errors) {
+		console.dir(graphqlResponse.errors, { depth: 999 });
+		//redirect("/");
 		throw TypeError(`GraphQL Error`, {
 			cause: graphqlResponse.errors,
 		});

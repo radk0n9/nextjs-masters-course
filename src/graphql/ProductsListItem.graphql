@@ -11,4 +11,5 @@ fragment ProductsListItem on Product {
 		height
 	}
 	price
+	rating
 }

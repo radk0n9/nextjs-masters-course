@@ -1,6 +1,6 @@
 import NextImage from "next/image";
 
-export const ProducItemsImages = ({
+export const ProductItemsImages = ({
 	src,
 	alt,
 	width,
@@ -12,7 +12,7 @@ export const ProducItemsImages = ({
 	height: number;
 }) => {
 	return (
-		<div className="aspect-square overflow-hidden rounded-lg border bg-stone-200 brightness-90 hover:brightness-100">
+		<div className="aspect-square overflow-hidden rounded-lg border bg-slate-50 brightness-90 hover:brightness-100">
 			<NextImage
 				width={width}
 				height={height}

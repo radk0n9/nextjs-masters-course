@@ -1,5 +1,6 @@
 query ProdcutsById($id: ID) {
 	product(id: $id) {
+		id
 		name
 		categories {
 			name
@@ -12,6 +13,10 @@ query ProdcutsById($id: ID) {
 			alt
 			height
 			width
+		}
+		rating
+		reviews {
+			...ReviewItem
 		}
 	}
 }

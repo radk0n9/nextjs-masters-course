@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { getProductsSearchBySearch } from "@/api/prodcuts";
-import { ProductList } from "@/components/oragnism /ProductList";
+import { ProductList } from "@/components/oragnism/ProductList";
 import { Spinner } from "@/components/atoms/Spinner";
 
 export default async function SearchQueryPage({
@@ -19,10 +19,14 @@ export default async function SearchQueryPage({
 		return <p className="text-lg ">Not products found</p>;
 	}
 	return (
-		<Suspense fallback={<Spinner />}>
-			<div>
-				<ProductList products={products.data} />
-			</div>
-		</Suspense>
+		<>
+			<article>
+				<Suspense fallback={<Spinner />}>
+					<div>
+						<ProductList products={products.data} />
+					</div>
+				</Suspense>
+			</article>
+		</>
 	);
 }

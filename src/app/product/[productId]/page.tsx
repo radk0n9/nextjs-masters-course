@@ -2,8 +2,8 @@ import { notFound } from "next/navigation";
 import { type Metadata } from "next";
 import { Suspense } from "react";
 import { getProductsById, getProductsList } from "@/api/prodcuts";
-import { SingleProductPage } from "@/components/oragnism /SingleProductPage";
 import { Spinner } from "@/components/atoms/Spinner";
+import { SingleProductPage } from "@/components/oragnism/SingleProductPage";
 
 export const generateMetadata = async ({
 	params,
@@ -17,13 +17,6 @@ export const generateMetadata = async ({
 	};
 };
 
-// export const generateStaticParams = async () => {
-// 	const products = await getProductsListStatic();
-// 	return products.map((product) => ({
-// 		productId: product.id,
-// 	}));
-// };
-
 export const generateStaticParams = async () => {
 	const products = await getProductsList(20);
 	return products.map((product) => ({
@@ -36,11 +29,12 @@ export default async function SingleProductIdPage({ params }: { params: { produc
 	if (!product) {
 		throw notFound();
 	}
+
 	return (
-		<div>
+		<article>
 			<Suspense fallback={<Spinner />}>
 				<SingleProductPage product={product} />
 			</Suspense>
-		</div>
+		</article>
 	);
 }

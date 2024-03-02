@@ -1,9 +1,23 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
+import { type Metadata } from "next";
 import { getProductsPaginatedList } from "@/api/prodcuts";
-import { ProductList } from "@/components/oragnism /ProductList";
+import { ProductList } from "@/components/oragnism/ProductList";
 import { Spinner } from "@/components/atoms/Spinner";
 import { ProductsPagination } from "@/components/atoms/ProductsPagination";
+import { ProductsHeader } from "@/components/atoms/ProductsHeader";
+import { type ProductSortBy } from "@/gql/graphql";
+
+export const generateMetadata = async ({
+	params,
+}: {
+	params: { pageNumber: string };
+}): Promise<Metadata> => {
+	return {
+		title: `Prodcuts Page ${params.pageNumber}`,
+		description: `Prodcuts Page ${params.pageNumber}`,
+	};
+};
 
 export const generateStaticParams = async () => {
 	const products = await getProductsPaginatedList(20, 0);
@@ -13,26 +27,61 @@ export const generateStaticParams = async () => {
 	}));
 };
 
-export default async function ProductsPage({ params }: { params: { pageNumber: string[] } }) {
+export default async function ProductsPage({
+	params,
+	searchParams,
+}: {
+	params: { pageNumber: string[] };
+	searchParams: { sort?: string };
+}) {
 	const currentPage = Number(params.pageNumber[0]);
-	const products = await getProductsPaginatedList(8, (Number(currentPage) - 1) * 8);
+
+	const products = await getProductsPaginatedList(
+		8,
+		(Number(currentPage) - 1) * 8,
+		searchParams.sort && searchParams.sort !== "ratingDESC" && searchParams.sort !== "ratingASC"
+			? {
+					orderBy: searchParams.sort
+						.toUpperCase()
+						.replace("ASC", "")
+						.replace("DESC", "") as ProductSortBy,
+					order: searchParams.sort?.toUpperCase().includes("ASC") ? "ASC" : "DESC",
+				}
+			: { orderBy: "DEFAULT", order: "DESC" },
+	);
 	const numberPages = Math.round(products.meta.total / 8);
 
 	if (params.pageNumber.length >= 2) {
 		return notFound();
 	}
+
+	let sortedProducts;
+	if (searchParams.sort === "ratingDESC") {
+		sortedProducts = products.data.sort((a, b) => (b.rating as number) - (a.rating as number));
+	} else if (searchParams.sort === "ratingASC") {
+		sortedProducts = products.data.sort((a, b) => (a.rating as number) - (b.rating as number));
+	} else {
+		sortedProducts = products.data;
+	}
+
 	return (
 		<>
-			<div>
-				<h1 className="mb-5 text-center text-2xl font-semibold">Page {params.pageNumber}</h1>
-				<h2 className="sr-only">Products</h2>
-				<Suspense fallback={<Spinner />}>
-					<ProductList products={products.data} />
-				</Suspense>
-			</div>
-			<div>
-				<ProductsPagination numberPages={numberPages} currentPage={currentPage} url={`/products`} />
-			</div>
+			<article>
+				<div>
+					<ProductsHeader pageNumber={params.pageNumber} />
+					<h2 className="sr-only">Products</h2>
+					<Suspense fallback={<Spinner />}>
+						<ProductList products={sortedProducts} />
+					</Suspense>
+				</div>
+				<div>
+					<ProductsPagination
+						numberPages={numberPages}
+						currentPage={currentPage}
+						url={`/products`}
+					/>
+				</div>
+			</article>
 		</>
 	);
 }
