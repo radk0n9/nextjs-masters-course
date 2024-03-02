@@ -39,7 +39,7 @@ export default async function ProductsPage({
 	const products = await getProductsPaginatedList(
 		8,
 		(Number(currentPage) - 1) * 8,
-		searchParams.sort && searchParams.sort !== "ratingDESC" && searchParams.sort !== "ratingASC"
+		searchParams.sort
 			? {
 					orderBy: searchParams.sort
 						.toUpperCase()
@@ -55,15 +55,6 @@ export default async function ProductsPage({
 		return notFound();
 	}
 
-	let sortedProducts;
-	if (searchParams.sort === "ratingDESC") {
-		sortedProducts = products.data.sort((a, b) => (b.rating as number) - (a.rating as number));
-	} else if (searchParams.sort === "ratingASC") {
-		sortedProducts = products.data.sort((a, b) => (a.rating as number) - (b.rating as number));
-	} else {
-		sortedProducts = products.data;
-	}
-
 	return (
 		<>
 			<article>
@@ -71,7 +62,7 @@ export default async function ProductsPage({
 					<ProductsHeader pageNumber={params.pageNumber} />
 					<h2 className="sr-only">Products</h2>
 					<Suspense fallback={<Spinner />}>
-						<ProductList products={sortedProducts} />
+						<ProductList products={products.data} />
 					</Suspense>
 				</div>
 				<div>
