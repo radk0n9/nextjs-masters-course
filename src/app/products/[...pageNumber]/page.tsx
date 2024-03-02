@@ -54,7 +54,6 @@ export default async function ProductsPage({
 	if (params.pageNumber.length >= 2) {
 		return notFound();
 	}
-
 	return (
 		<>
 			<article>
