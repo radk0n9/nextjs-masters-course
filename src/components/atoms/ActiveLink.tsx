@@ -15,14 +15,18 @@ export const ActiveLink = <T extends string>({
 	children: ReactNode;
 }) => {
 	const currentPathname = usePathname();
-	const isActive = exact ? currentPathname == href : currentPathname.startsWith(href);
+
+	const isActive = exact
+		? currentPathname === href.split("?")[0]
+		: currentPathname.startsWith(href) &&
+			(currentPathname[href.length] === "/" || currentPathname.length === href.length);
 
 	return (
 		<Link
 			href={href}
 			className={clsx(
-				"flex h-full items-center border-b-2 px-4 py-2",
-				(isActive && "border-purple-900 hover:border-purple-900") ||
+				"flex h-full items-center border-b-2 px-4 py-2 text-gray-800",
+				(isActive && "border-purple-900 text-purple-900 hover:border-purple-900") ||
 					"border-transparent hover:border-zinc-300",
 			)}
 			aria-current={isActive ? "page" : undefined}

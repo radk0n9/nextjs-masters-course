@@ -318,30 +318,30 @@ export type ProdcutsByIdQueryVariables = Exact<{
 }>;
 
 
-export type ProdcutsByIdQuery = { product?: { id: string, name: string, price: number, description: string, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string, alt: string, height: number, width: number }>, reviews: Array<{ author: string, description: string, id: string, rating: number, title: string, email: string }> } | null };
+export type ProdcutsByIdQuery = { product?: { id: string, name: string, price: number, description: string, rating?: number | null, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string, alt: string, height: number, width: number }>, reviews: Array<{ author: string, description: string, id: string, rating: number, title: string, email: string }> } | null };
 
 export type ProductsByCategoryBySlugQueryVariables = Exact<{
   slug?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type ProductsByCategoryBySlugQuery = { category?: { name: string, description: string, products: Array<{ id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string, alt: string, width: number, height: number }> }> } | null };
+export type ProductsByCategoryBySlugQuery = { category?: { name: string, description: string, products: Array<{ id: string, name: string, price: number, rating?: number | null, categories: Array<{ name: string }>, images: Array<{ url: string, alt: string, width: number, height: number }> }> } | null };
 
 export type ProductsByCollectionBySlugQueryVariables = Exact<{
   slug?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type ProductsByCollectionBySlugQuery = { collection?: { id: string, slug: string, name: string, description: string, products: Array<{ id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string, alt: string, width: number, height: number }> }> } | null };
+export type ProductsByCollectionBySlugQuery = { collection?: { id: string, slug: string, name: string, description: string, products: Array<{ id: string, name: string, price: number, rating?: number | null, categories: Array<{ name: string }>, images: Array<{ url: string, alt: string, width: number, height: number }> }> } | null };
 
 export type ProductsGetListQueryVariables = Exact<{
   take: Scalars['Int']['input'];
 }>;
 
 
-export type ProductsGetListQuery = { products: { data: Array<{ id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string, alt: string, width: number, height: number }> }> } };
+export type ProductsGetListQuery = { products: { data: Array<{ id: string, name: string, price: number, rating?: number | null, categories: Array<{ name: string }>, images: Array<{ url: string, alt: string, width: number, height: number }> }> } };
 
-export type ProductsListItemFragment = { id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string, alt: string, width: number, height: number }> };
+export type ProductsListItemFragment = { id: string, name: string, price: number, rating?: number | null, categories: Array<{ name: string }>, images: Array<{ url: string, alt: string, width: number, height: number }> };
 
 export type ProductsPaginatedListQueryVariables = Exact<{
   take: Scalars['Int']['input'];
@@ -351,21 +351,21 @@ export type ProductsPaginatedListQueryVariables = Exact<{
 }>;
 
 
-export type ProductsPaginatedListQuery = { products: { data: Array<{ id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string, alt: string, width: number, height: number }> }>, meta: { total: number } } };
+export type ProductsPaginatedListQuery = { products: { data: Array<{ id: string, name: string, price: number, rating?: number | null, categories: Array<{ name: string }>, images: Array<{ url: string, alt: string, width: number, height: number }> }>, meta: { total: number } } };
 
 export type ProductsSearchBySearchQueryVariables = Exact<{
   search?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type ProductsSearchBySearchQuery = { products: { data: Array<{ id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string, alt: string, width: number, height: number }> }> } };
+export type ProductsSearchBySearchQuery = { products: { data: Array<{ id: string, name: string, price: number, rating?: number | null, categories: Array<{ name: string }>, images: Array<{ url: string, alt: string, width: number, height: number }> }> } };
 
 export type ProductsSuggestedBySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
 }>;
 
 
-export type ProductsSuggestedBySlugQuery = { category?: { products: Array<{ id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string, alt: string, width: number, height: number }> }> } | null };
+export type ProductsSuggestedBySlugQuery = { category?: { products: Array<{ id: string, name: string, price: number, rating?: number | null, categories: Array<{ name: string }>, images: Array<{ url: string, alt: string, width: number, height: number }> }> } | null };
 
 export type ReviewCreateForProductMutationVariables = Exact<{
   name: Scalars['String']['input'];
@@ -439,6 +439,7 @@ export const ProductsListItemFragmentDoc = new TypedDocumentString(`
     height
   }
   price
+  rating
 }
     `, {"fragmentName":"ProductsListItem"}) as unknown as TypedDocumentString<ProductsListItemFragment, unknown>;
 export const ReviewItemFragmentDoc = new TypedDocumentString(`
@@ -546,6 +547,7 @@ export const ProdcutsByIdDocument = new TypedDocumentString(`
       height
       width
     }
+    rating
     reviews {
       ...ReviewItem
     }
@@ -582,6 +584,7 @@ export const ProductsByCategoryBySlugDocument = new TypedDocumentString(`
     height
   }
   price
+  rating
 }`) as unknown as TypedDocumentString<ProductsByCategoryBySlugQuery, ProductsByCategoryBySlugQueryVariables>;
 export const ProductsByCollectionBySlugDocument = new TypedDocumentString(`
     query ProductsByCollectionBySlug($slug: String) {
@@ -608,6 +611,7 @@ export const ProductsByCollectionBySlugDocument = new TypedDocumentString(`
     height
   }
   price
+  rating
 }`) as unknown as TypedDocumentString<ProductsByCollectionBySlugQuery, ProductsByCollectionBySlugQueryVariables>;
 export const ProductsGetListDocument = new TypedDocumentString(`
     query ProductsGetList($take: Int!) {
@@ -630,6 +634,7 @@ export const ProductsGetListDocument = new TypedDocumentString(`
     height
   }
   price
+  rating
 }`) as unknown as TypedDocumentString<ProductsGetListQuery, ProductsGetListQueryVariables>;
 export const ProductsPaginatedListDocument = new TypedDocumentString(`
     query ProductsPaginatedList($take: Int!, $skip: Int, $orderBy: ProductSortBy, $order: SortDirection) {
@@ -655,6 +660,7 @@ export const ProductsPaginatedListDocument = new TypedDocumentString(`
     height
   }
   price
+  rating
 }`) as unknown as TypedDocumentString<ProductsPaginatedListQuery, ProductsPaginatedListQueryVariables>;
 export const ProductsSearchBySearchDocument = new TypedDocumentString(`
     query ProductsSearchBySearch($search: String) {
@@ -677,6 +683,7 @@ export const ProductsSearchBySearchDocument = new TypedDocumentString(`
     height
   }
   price
+  rating
 }`) as unknown as TypedDocumentString<ProductsSearchBySearchQuery, ProductsSearchBySearchQueryVariables>;
 export const ProductsSuggestedBySlugDocument = new TypedDocumentString(`
     query ProductsSuggestedBySlug($slug: String!) {
@@ -699,6 +706,7 @@ export const ProductsSuggestedBySlugDocument = new TypedDocumentString(`
     height
   }
   price
+  rating
 }`) as unknown as TypedDocumentString<ProductsSuggestedBySlugQuery, ProductsSuggestedBySlugQueryVariables>;
 export const ReviewCreateForProductDocument = new TypedDocumentString(`
     mutation ReviewCreateForProduct($name: String!, $content: String!, $email: String!, $productId: ID!, $rating: Int!, $title: String!) {

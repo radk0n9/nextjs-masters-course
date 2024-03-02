@@ -18,10 +18,10 @@ export async function Navbar() {
 	const cart = await getOrCreateCart();
 	const qunatity = cart.cartFindOrCreate.items.length || 0;
 	return (
-		<div className="sticky top-0 z-20 bg-zinc-200 bg-opacity-30 shadow backdrop-blur-lg backdrop-filter">
+		<div className="sticky top-0 z-20  bg-zinc-200 bg-opacity-30 shadow backdrop-blur-lg backdrop-filter">
 			<div className="mx-auto max-w-md px-12 sm:max-w-2xl md:max-w-6xl lg:max-w-7xl">
 				<div className="relative flex h-16 justify-between">
-					<nav className="flex">
+					<nav className="flex ">
 						<ul className="flex gap-3 text-sm/5 font-semibold lg:text-lg/5">
 							{navLinks.map((link, index) => (
 								<li key={index} className="flex">

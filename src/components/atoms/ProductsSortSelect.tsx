@@ -13,7 +13,7 @@ export const ProdcutsSortSelect = () => {
 
 	return (
 		<>
-			<div className="flex items-center justify-center">
+			<div className="flex">
 				<select
 					className="h-full w-48 cursor-pointer rounded-md text-sm font-light shadow-md outline-none focus:ring focus:ring-purple-400 focus:ring-opacity-50"
 					value={sort}
@@ -30,6 +30,12 @@ export const ProdcutsSortSelect = () => {
 					</option>
 					<option value="nameASC">Name (A to Z)</option>
 					<option value="nameDESC">Name (Z to A)</option>
+					<option value="ratingASC" data-testid="sort-by-rating">
+						Rating (Low to High)
+					</option>
+					<option value="ratingDESC" data-testid="sort-by-rating">
+						Rating (High to Low)
+					</option>
 				</select>
 			</div>
 		</>
