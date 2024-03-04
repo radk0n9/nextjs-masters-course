@@ -97,7 +97,7 @@ export const getProductsSearchBySearch = async (searchQuery: string) => {
 };
 
 export async function addProductReview(formData: FormData) {
-	return excecuteGraphQL({
+	const graphqlRespone = await excecuteGraphQL({
 		query: ReviewCreateForProductDocument,
 		variables: {
 			title: formData.get("headline") as string,
@@ -106,20 +106,29 @@ export async function addProductReview(formData: FormData) {
 			name: formData.get("name") as string,
 			email: formData.get("email") as string,
 			productId: formData.get("productId") as string,
+			createAt: new Date().toISOString(),
 		},
 		next: {
 			tags: ["review"],
 		},
 	});
+	if (!graphqlRespone) {
+		throw new Error("Failed to add review");
+	}
+	return graphqlRespone;
 }
 
 export async function getProductByIdReview(productId: string) {
-	const graphqlRespone = excecuteGraphQL({
+	const graphqlRespone = await excecuteGraphQL({
 		query: ReviewGetByProductIdDocument,
 		variables: { productId: productId },
+		cache: "no-store",
 		next: {
 			tags: ["review"],
 		},
 	});
+	if (!graphqlRespone) {
+		throw new Error("Failed to get product review");
+	}
 	return graphqlRespone;
 }

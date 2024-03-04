@@ -2,19 +2,21 @@ import NextImage from "next/image";
 import { cookies } from "next/headers";
 import { revalidateTag } from "next/cache";
 import { StarIcon } from "lucide-react";
+import { notFound } from "next/navigation";
 import { SuggestedProductsList } from "@/components/oragnism/SuggestedProdcuts";
 import { formatPrice } from "@/utils/utils";
-import { type ProdcutsByIdQuery } from "@/gql/graphql";
-import { ReviewFormWithReviews } from "@/components/oragnism/ReviewFormWithReviews";
+import { ReviewFormWidget } from "@/components/oragnism/ReviewFormWidget";
 import { AddToCartButton } from "@/components/atoms/AddToCartButton";
 import { addProductToCard, getOrCreateCart } from "@/api/cart";
 import { changeProductCardQuantityAction } from "@/api/actions";
+import { getProductByIdReview, getProductsById } from "@/api/prodcuts";
 
-type ProductItemListProps = {
-	product: ProdcutsByIdQuery;
-};
-
-export const SingleProductPage = async ({ product }: ProductItemListProps) => {
+export const SingleProductPage = async ({ productId }: { productId: string }) => {
+	const product = await getProductsById(productId);
+	const prodcutReview = await getProductByIdReview(productId);
+	if (!product) {
+		throw notFound();
+	}
 	async function addToCartAction(_formData: FormData) {
 		"use server";
 
@@ -79,8 +81,8 @@ export const SingleProductPage = async ({ product }: ProductItemListProps) => {
 				</aside>
 			</div>
 
-			{product.product?.id && (
-				<ReviewFormWithReviews productId={product.product.id} reviews={product.product.reviews} />
+			{product.product?.id && prodcutReview.product?.reviews && (
+				<ReviewFormWidget productId={product.product.id} reviews={prodcutReview.product?.reviews} />
 			)}
 		</>
 	);

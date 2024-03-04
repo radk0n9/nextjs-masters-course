@@ -179,7 +179,8 @@ export type ProductList = {
 export type ProductSortBy =
   | 'DEFAULT'
   | 'NAME'
-  | 'PRICE';
+  | 'PRICE'
+  | 'RATING';
 
 export type Query = {
   cart?: Maybe<Cart>;
@@ -318,7 +319,7 @@ export type ProdcutsByIdQueryVariables = Exact<{
 }>;
 
 
-export type ProdcutsByIdQuery = { product?: { id: string, name: string, price: number, description: string, rating?: number | null, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string, alt: string, height: number, width: number }>, reviews: Array<{ author: string, description: string, id: string, rating: number, title: string, email: string }> } | null };
+export type ProdcutsByIdQuery = { product?: { id: string, name: string, price: number, description: string, rating?: number | null, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string, alt: string, height: number, width: number }>, reviews: Array<{ author: string, description: string, rating: number, id: string, createdAt: unknown, title: string, email: string }> } | null };
 
 export type ProductsByCategoryBySlugQueryVariables = Exact<{
   slug?: InputMaybe<Scalars['String']['input']>;
@@ -379,14 +380,14 @@ export type ReviewCreateForProductMutationVariables = Exact<{
 
 export type ReviewCreateForProductMutation = { reviewCreate: { id: string } };
 
-export type ReviewItemFragment = { author: string, description: string, id: string, rating: number, title: string, email: string };
+export type ReviewItemFragment = { author: string, description: string, rating: number, id: string, createdAt: unknown, title: string, email: string };
 
 export type ReviewGetByProductIdQueryVariables = Exact<{
   productId: Scalars['ID']['input'];
 }>;
 
 
-export type ReviewGetByProductIdQuery = { product?: { id: string, reviews: Array<{ author: string, description: string, id: string, rating: number, title: string, email: string }> } | null };
+export type ReviewGetByProductIdQuery = { product?: { id: string, reviews: Array<{ author: string, description: string, rating: number, id: string, createdAt: unknown, title: string, email: string }> } | null };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -446,8 +447,9 @@ export const ReviewItemFragmentDoc = new TypedDocumentString(`
     fragment ReviewItem on Review {
   author
   description
-  id
   rating
+  id
+  createdAt
   title
   email
 }
@@ -556,8 +558,9 @@ export const ProdcutsByIdDocument = new TypedDocumentString(`
     fragment ReviewItem on Review {
   author
   description
-  id
   rating
+  id
+  createdAt
   title
   email
 }`) as unknown as TypedDocumentString<ProdcutsByIdQuery, ProdcutsByIdQueryVariables>;
@@ -734,8 +737,9 @@ export const ReviewGetByProductIdDocument = new TypedDocumentString(`
     fragment ReviewItem on Review {
   author
   description
-  id
   rating
+  id
+  createdAt
   title
   email
 }`) as unknown as TypedDocumentString<ReviewGetByProductIdQuery, ReviewGetByProductIdQueryVariables>;

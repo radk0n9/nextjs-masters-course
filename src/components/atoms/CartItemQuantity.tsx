@@ -15,6 +15,7 @@ export const CartItemQuantity = ({
 	const [optimisticQuantity, setOptimisticQuantity] = useOptimistic(
 		quantity,
 		(_currentOptimisticQuntity, newQuntity: number) => {
+			console.log("Aktualizacja optymistyczna2:", newQuntity);
 			return newQuntity;
 		},
 	);

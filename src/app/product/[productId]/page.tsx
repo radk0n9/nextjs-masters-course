@@ -26,14 +26,14 @@ export const generateStaticParams = async () => {
 
 export default async function SingleProductIdPage({ params }: { params: { productId: string } }) {
 	const product = await getProductsById(params.productId);
-	if (!product) {
+	if (!product.product) {
 		throw notFound();
 	}
 
 	return (
 		<article>
 			<Suspense fallback={<Spinner />}>
-				<SingleProductPage product={product} />
+				<SingleProductPage productId={product.product.id} />
 			</Suspense>
 		</article>
 	);
