@@ -15,21 +15,19 @@ export const CartItemQuantity = ({
 	const [optimisticQuantity, setOptimisticQuantity] = useOptimistic(
 		quantity,
 		(_currentOptimisticQuntity, newQuntity: number) => {
-			console.log("Aktualizacja optymistyczna2:", newQuntity);
 			return newQuntity;
 		},
 	);
+
 	return (
 		<form className="flex items-center justify-center gap-2">
 			<div className="flex items-center">
 				<button
 					type="submit"
 					data-testid="decrement"
-					className="h-8 w-8 rounded-full bg-zinc-300 shadow-lg brightness-90 transition-transform duration-200 hover:scale-95 hover:brightness-100 disabled:cursor-wait disabled:bg-zinc-500"
+					disabled={optimisticQuantity === 1}
+					className="h-8 w-8 rounded-full bg-zinc-300 shadow-lg brightness-90 transition-transform duration-200 hover:scale-95 hover:brightness-100 disabled:cursor-not-allowed disabled:bg-zinc-100"
 					formAction={async () => {
-						if (optimisticQuantity === 0) {
-							return;
-						}
 						setOptimisticQuantity(optimisticQuantity - 1);
 						await changeProductCardQuantityAction(cartId, productId, optimisticQuantity - 1);
 					}}

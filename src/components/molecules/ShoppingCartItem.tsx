@@ -44,7 +44,7 @@ export const ShoppingCartItem = ({
 							<span className="text-lg font-medium">
 								{formatPrice(item[0]?.product.price / 100)}
 							</span>
-							{isModal && (
+							{/* {isModal && (
 								<>
 									<div className="flex items-center justify-between">
 										<CartItemQuantity
@@ -55,7 +55,7 @@ export const ShoppingCartItem = ({
 										<RemoveProductCart cartId={cartId} productId={item[0]?.product.id} />
 									</div>
 								</>
-							)}
+							)} */}
 						</div>
 					</div>
 					<div className="min-w flex items-center justify-center gap-4">

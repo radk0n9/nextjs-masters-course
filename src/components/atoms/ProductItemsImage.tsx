@@ -18,7 +18,7 @@ export const ProductItemsImages = ({
 				height={height}
 				alt={alt}
 				src={src}
-				className="h-full w-full object-cover object-center p-3 transition-transform hover:scale-105"
+				className="h-full w-full object-cover object-center p-3 transition-transform duration-300 ease-in-out hover:scale-105"
 			/>
 		</div>
 	);

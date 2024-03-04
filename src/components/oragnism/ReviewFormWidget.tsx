@@ -2,8 +2,8 @@
 import { Suspense, useOptimistic } from "react";
 import { addProductReviewAction } from "@/api/actions";
 import { type ReviewItemFragment } from "@/gql/graphql";
-import { ReviewList } from "@/components/atoms/ReviewList";
-import { ReviewForm } from "@/components/atoms/ReviewForm";
+import { ReviewList } from "@/components/molecules/ReviewList";
+import { ReviewForm } from "@/components/molecules/ReviewForm";
 import { Spinner } from "@/components/atoms/Spinner";
 
 export const ReviewFormWidget = ({

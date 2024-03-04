@@ -28,7 +28,7 @@ export const SearchInput = () => {
 	return (
 		<>
 			<form onSubmit={handleOnSubmit}>
-				<div className="flex h-9 w-64 items-center justify-center gap-1 rounded-xl border bg-white">
+				<div className="flex h-8 w-64 items-center justify-center gap-1 rounded-xl border bg-white">
 					<input
 						type="search"
 						name="searchQuery"

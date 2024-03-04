@@ -4,8 +4,8 @@ import { type Metadata } from "next";
 import { getProductsPaginatedList } from "@/api/prodcuts";
 import { ProductList } from "@/components/oragnism/ProductList";
 import { Spinner } from "@/components/atoms/Spinner";
-import { ProductsPagination } from "@/components/atoms/ProductsPagination";
-import { ProductsHeader } from "@/components/atoms/ProductsHeader";
+import { ProductsPagination } from "@/components/molecules/ProductsPagination";
+import { ProductsHeader } from "@/components/molecules/ProductsHeader";
 import { type ProductSortBy } from "@/gql/graphql";
 
 export const generateMetadata = async ({

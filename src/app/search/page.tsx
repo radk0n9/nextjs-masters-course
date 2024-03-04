@@ -16,11 +16,19 @@ export default async function SearchQueryPage({
 
 	const products = await getProductsSearchBySearch(searchQuery);
 	if (!products || products.data.length === 0) {
-		return <p className="text-lg ">Not products found</p>;
+		<p className="text-lg ">Found 0 items for phrase {searchQuery}</p>;
 	}
+
 	return (
 		<>
 			<article>
+				{products ? (
+					<p className="mb-5 text-lg ">
+						Found {products.data.length} items for phrase {searchQuery}
+					</p>
+				) : (
+					""
+				)}
 				<Suspense fallback={<Spinner />}>
 					<div>
 						<ProductList products={products.data} />

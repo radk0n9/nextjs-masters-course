@@ -15,7 +15,7 @@ export const InputReviewForm = ({
 }) => {
 	const [email, setEmail] = useState("");
 	const [error, setError] = useState<string | null>(null);
-	//console.log(email);
+
 	function isValid(email: string) {
 		return /\S+@\S+\.\S+/.test(email);
 	}
