@@ -53,6 +53,7 @@ export async function changeProductCardQuantity(
 			quantity: quantity,
 			id: cartId,
 		},
+		cache: "no-store",
 		next: {
 			tags: ["cart"],
 		},

@@ -4,7 +4,7 @@ import { type Metadata, type Route } from "next";
 import { ProductList } from "@/components/oragnism/ProductList";
 import { getProdcutsByCategoryBySlug } from "@/api/prodcuts";
 import { Spinner } from "@/components/atoms/Spinner";
-import { ProductsPagination } from "@/components/atoms/ProductsPagination";
+import { ProductsPagination } from "@/components/molecules/ProductsPagination";
 
 export const generateMetadata = async ({
 	params,
@@ -37,7 +37,7 @@ export default async function CategoryProductsPage({
 			<Suspense fallback={<Spinner />}>
 				<article>
 					<div className="pb-5">
-						<h1 className="text-3xl font-semibold ">{products.name}</h1>
+						<h1 className="text-lg font-semibold uppercase ">{products.name}</h1>
 						<p className="text-sm">{products.description}</p>
 					</div>
 					<div>

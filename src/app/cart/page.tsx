@@ -1,8 +1,9 @@
 import { redirect } from "next/navigation";
 import { getOrCreateCart } from "@/api/cart";
 import { handlePaymentAction } from "@/api/actions";
-import { ShoppingCartItem } from "@/components/atoms/ShoppingCartItem";
+import { ShoppingCartItem } from "@/components/molecules/ShoppingCartItem";
 import { OrderSummary } from "@/components/atoms/OrderSummary";
+import { PayButton } from "@/components/atoms/PayButton";
 
 export default async function CartPage() {
 	const cart = await getOrCreateCart();
@@ -17,7 +18,7 @@ export default async function CartPage() {
 	return (
 		<>
 			<div className="w-full">
-				<h1 className="text-4xl font-bold">Shopping Cart</h1>
+				<h1 className="text-2xl font-bold uppercase">Shopping Cart</h1>
 				<div className="mt-10 flex flex-col gap-20 md:flex-row">
 					<section className="w-full md:w-2/3">
 						<ul>
@@ -35,12 +36,7 @@ export default async function CartPage() {
 						<div className="flex flex-col rounded-md bg-zinc-50 p-5">
 							<OrderSummary totalPrice={totalPrice} />
 							<form action={handlePaymentAction}>
-								<button
-									type="submit"
-									className="mt-4 w-full max-w-sm rounded-md border-4 border-transparent bg-purple-500 py-2 font-bold text-white transition-colors hover:border-4 hover:border-purple-900 hover:bg-purple-600"
-								>
-									Pay
-								</button>
+								<PayButton />
 							</form>
 						</div>
 					</section>

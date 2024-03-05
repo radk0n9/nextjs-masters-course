@@ -1,6 +1,7 @@
 import { ShoppingCart } from "lucide-react";
 import { Suspense } from "react";
 import { type Route } from "next";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { ActiveLink } from "@/components/atoms/ActiveLink";
 import { SearchInput } from "@/components/atoms/SearchInput";
 import { getOrCreateCart } from "@/api/cart";
@@ -18,11 +19,11 @@ export async function Navbar() {
 	const cart = await getOrCreateCart();
 	const qunatity = cart.cartFindOrCreate.items.length || 0;
 	return (
-		<div className="sticky top-0 z-20  bg-zinc-200 bg-opacity-30 shadow backdrop-blur-lg backdrop-filter">
+		<div className="sticky top-0 z-20 bg-white bg-opacity-60 shadow backdrop-blur-lg backdrop-filter">
 			<div className="mx-auto max-w-md px-12 sm:max-w-2xl md:max-w-6xl lg:max-w-7xl">
 				<div className="relative flex h-16 justify-between">
 					<nav className="flex ">
-						<ul className="flex gap-3 text-sm/5 font-semibold lg:text-lg/5">
+						<ul className="flex gap-3 text-sm/5 font-semibold">
 							{navLinks.map((link, index) => (
 								<li key={index} className="flex">
 									<ActiveLink exact={link.exact} href={link.href as Route}>
@@ -40,10 +41,18 @@ export async function Navbar() {
 							<li className="">
 								<ActiveLink exact={true} href={"/cart" as Route}>
 									<ShoppingCart className="h-[1.3em] w-[1.3em]" />
-									<span className="ml-2 text-sm/5 font-semibold lg:text-lg/5">{qunatity}</span>
+									<span className="ml-2 text-sm/5 font-semibold">{qunatity}</span>
 								</ActiveLink>
 							</li>
 						</ul>
+						<div>
+							<SignedIn>
+								<UserButton userProfileMode="navigation" />
+							</SignedIn>
+							<SignedOut>
+								<SignInButton />
+							</SignedOut>
+						</div>
 					</div>
 				</div>
 			</div>

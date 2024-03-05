@@ -4,8 +4,8 @@ import { type Metadata } from "next";
 import { getProductsPaginatedList } from "@/api/prodcuts";
 import { ProductList } from "@/components/oragnism/ProductList";
 import { Spinner } from "@/components/atoms/Spinner";
-import { ProductsPagination } from "@/components/atoms/ProductsPagination";
-import { ProductsHeader } from "@/components/atoms/ProductsHeader";
+import { ProductsPagination } from "@/components/molecules/ProductsPagination";
+import { ProductsHeader } from "@/components/molecules/ProductsHeader";
 import { type ProductSortBy } from "@/gql/graphql";
 
 export const generateMetadata = async ({
@@ -19,13 +19,13 @@ export const generateMetadata = async ({
 	};
 };
 
-export const generateStaticParams = async () => {
-	const products = await getProductsPaginatedList(20, 0);
-	const numberPages = Math.round(products.meta.total / 8);
-	return Array.from({ length: numberPages }).map((_, index) => ({
-		pageNumber: [String(index + 1)],
-	}));
-};
+// export const generateStaticParams = async () => {
+// 	const products = await getProductsPaginatedList(20, 0);
+// 	const numberPages = Math.round(products.meta.total / 8);
+// 	return Array.from({ length: numberPages }).map((_, index) => ({
+// 		pageNumber: [String(index + 1)],
+// 	}));
+// };
 
 export default async function ProductsPage({
 	params,

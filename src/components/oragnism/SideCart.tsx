@@ -1,5 +1,5 @@
 import { getOrCreateCart } from "@/api/cart";
-import { ModalCart } from "@/components/atoms/ModalCart";
+import { ModalCart } from "@/components/molecules/ModalCart";
 import { Overlay } from "@/components/atoms/Overlay";
 
 export const SideCart = async () => {

@@ -3,10 +3,10 @@
 import { useTransition } from "react";
 import { Trash2 } from "lucide-react";
 import { removeProductCartAction } from "@/api/actions";
+import { SpinnerSlow } from "@/components/atoms/SpinnerSmall";
 
 export const RemoveProductCart = ({ cartId, productId }: { cartId: string; productId: string }) => {
 	const [isPending, startTransition] = useTransition();
-	//const router = useRouter();
 
 	return (
 		<>
@@ -20,7 +20,7 @@ export const RemoveProductCart = ({ cartId, productId }: { cartId: string; produ
 					});
 				}}
 			>
-				<Trash2 />
+				{isPending ? <SpinnerSlow /> : <Trash2 />}
 			</button>
 		</>
 	);
