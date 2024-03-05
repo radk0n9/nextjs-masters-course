@@ -26,7 +26,7 @@ export default function RootLayout({
 			<html lang="en">
 				<body className={`${inter.className} flex min-h-screen flex-col font-sans`}>
 					<Navbar />
-					<main className="flex max-w-md flex-grow flex-col p-12 sm:max-w-2xl sm:py-10 md:max-w-6xl lg:max-w-7xl">
+					<main className="mx-auto flex max-w-md flex-grow flex-col p-12 sm:max-w-2xl sm:py-10 md:max-w-6xl lg:max-w-7xl">
 						{children}
 					</main>
 					<SpeedInsights />

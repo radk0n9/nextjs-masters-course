@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { type Metadata } from "next";
 import { Suspense } from "react";
-import { getProductsById, getProductsList } from "@/api/prodcuts";
+import { getProductsById } from "@/api/prodcuts";
 import { Spinner } from "@/components/atoms/Spinner";
 import { SingleProductPage } from "@/components/oragnism/SingleProductPage";
 
@@ -17,12 +17,12 @@ export const generateMetadata = async ({
 	};
 };
 
-export const generateStaticParams = async () => {
-	const products = await getProductsList(20);
-	return products.map((product) => ({
-		productId: product.id,
-	}));
-};
+// export const generateStaticParams = async () => {
+// 	const products = await getProductsList(20);
+// 	return products.map((product) => ({
+// 		productId: product.id,
+// 	}));
+// };
 
 export default async function SingleProductIdPage({ params }: { params: { productId: string } }) {
 	const product = await getProductsById(params.productId);

@@ -19,13 +19,13 @@ export const generateMetadata = async ({
 	};
 };
 
-export const generateStaticParams = async () => {
-	const products = await getProductsPaginatedList(20, 0);
-	const numberPages = Math.round(products.meta.total / 8);
-	return Array.from({ length: numberPages }).map((_, index) => ({
-		pageNumber: [String(index + 1)],
-	}));
-};
+// export const generateStaticParams = async () => {
+// 	const products = await getProductsPaginatedList(20, 0);
+// 	const numberPages = Math.round(products.meta.total / 8);
+// 	return Array.from({ length: numberPages }).map((_, index) => ({
+// 		pageNumber: [String(index + 1)],
+// 	}));
+// };
 
 export default async function ProductsPage({
 	params,
